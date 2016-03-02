@@ -1,0 +1,29 @@
+jenkins:
+  build: jenkins/
+  ports:
+    - "127.0.0.1:9090:8080"
+  volumes:
+    - "/srv/www/jenkins:/var/jenkins_home"
+    - "/home/remotebkp/ecclesianuernberg:/ecclesia"
+    - "/usr/bin/docker:/usr/bin/docker"
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  links:
+    - mysql
+    - redis
+    - devpi
+  external_links:
+    - prosodydocker_prosody_1
+    - gogs_gogs_1
+
+mysql:
+  image: mysql:5.5
+  volumes_from:
+    - jenkins-mysql-data
+  environment:
+    - MYSQL_ROOT_PASSWORD=my-secret-pw
+
+redis:
+  image: redis
+
+devpi:
+  build: devpi/
