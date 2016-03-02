@@ -8,13 +8,19 @@ services:
       - URL_PATH=https://reader.xsteadfastx.org
       - VIRTUAL_HOST=ttrss
       - MYSQL_ROOT_PASSWORD=mysecretpassword
+    networks:
+      - back
+      - front
   db:
     image: mariadb
     volumes:
       - /srv/www/ttrss:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=mysecretpassword
+    networks:
+      - back
 networks:
-  default:
+  back:
+  front:
     external:
       name: nginx_default
