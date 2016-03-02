@@ -1,0 +1,15 @@
+version: '2'
+services:
+  owncloud:
+    build: owncloud/
+    ports:
+      - "80"
+    volumes:
+      - "/srv/www/owncloud/config:/var/www/owncloud/config"
+      - "/srv/www/owncloud/data:/var/www/owncloud/data"
+    environment:
+      - VIRTUAL_HOST=cloud
+networks:
+  default:
+    external:
+      name: nginx_default

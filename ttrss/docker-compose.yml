@@ -1,0 +1,20 @@
+version: '2'
+services:
+  ttrss:
+    build: ttrss/
+    ports:
+      - "80"
+    environment:
+      - URL_PATH=https://reader.xsteadfastx.org
+      - VIRTUAL_HOST=ttrss
+      - MYSQL_ROOT_PASSWORD=mysecretpassword
+  db:
+    image: mariadb
+    volumes:
+      - /srv/www/ttrss:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysecretpassword
+networks:
+  default:
+    external:
+      name: nginx_default

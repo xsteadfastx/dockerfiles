@@ -1,0 +1,15 @@
+version: '2'
+services:
+  emby:
+    image: emby/embyserver
+    volumes:
+      - "/srv/www/emby/config:/config"
+      - "/home/marv/Media/Musik:/media/Musik:ro"
+      - "/home/marv/Media/Videos:/media/Videos"
+      - "/home/marv/Downloads/putio:/downloads/putio"
+    environment:
+      - TZ=Europe/Berlin
+      - AUTO_UPDATES_ON=true
+      - MB_USER_ID=1000
+      - MB_GROUP_ID=1000
+    network_mode: "host"

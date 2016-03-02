@@ -1,0 +1,16 @@
+version: '2'
+services:
+  gogs:
+    image: gogs/gogs
+    ports:
+      - "3000"
+    volumes:
+      - "/srv/www/gogs:/data"
+    environment:
+      - VIRTUAL_HOST=gogs
+      - VIRTUAL_PORT=3000
+
+networks:
+  default:
+    external:
+      name: nginx_default

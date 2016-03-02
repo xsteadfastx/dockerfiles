@@ -1,0 +1,19 @@
+version: '2'
+services:
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/nginx:/etc/nginx
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /var/log/nginx:/var/log/nginx
+  gen:
+    image: jwilder/docker-gen
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /opt/dockerfiles/nginx:/data
+    volumes_from:
+      - nginx
+    command: -notify-sighup nginx_nginx_1 -watch -only-exposed /data/nginx.tmpl /etc/nginx/upstream.conf

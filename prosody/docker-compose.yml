@@ -1,0 +1,12 @@
+version: '2'
+services:
+  prosody:
+    build: prosody/
+    volumes:
+      - /opt/prosody/config:/etc/prosody
+      - /opt/prosody/data:/var/lib/prosody
+      - /opt/prosody/logs:/var/log/prosody
+      - /opt/prosody/modules:/usr/lib/prosody-modules
+    ports:
+      - 5222:5222
+      - 5269:5269

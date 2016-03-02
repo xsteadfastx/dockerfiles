@@ -1,0 +1,15 @@
+version: '2'
+services:
+  bitlbee:
+    image: aostanin/bitlbee
+    volumes:
+      - "/opt/bitlbee/data:/data"
+    ports:
+      - "127.0.0.1:6667:6667"
+    external_links:
+      - prosody_prosody_1:prosody
+
+networks:
+  default:
+    external:
+      name: prosody_default
