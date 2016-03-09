@@ -1,5 +1,5 @@
-FROM alpine:3.2
-ENV owncloud_version 8.2.2
+FROM alpine:3.3
+ENV owncloud_version 9.0.0
 
 RUN echo "@edge http://dl-4.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
  && echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
@@ -21,6 +21,7 @@ RUN echo "@edge http://dl-4.alpinelinux.org/alpine/edge/main" >> /etc/apk/reposi
     php-zip \
     php-dom \
     php-xml \
+    php-xmlreader \
     php-ctype \
     php-zlib \
     php-iconv \
