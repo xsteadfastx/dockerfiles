@@ -1,0 +1,30 @@
+---
+- hosts: localhost
+  remote_user: root
+
+  tasks:
+
+    - name: wait for db container
+      wait_for:
+        host=db
+        port=3306
+
+    - name: ttrss db
+      mysql_db:
+        name={{ lookup('env','MYSQL_DATABASE') }}
+        state=present
+        login_host=db
+        login_user=root
+        login_password={{ lookup('env','MYSQL_ROOT_PASSWORD') }}
+      notify: import ttrss schema
+
+  handlers:
+
+    - name: import ttrss schema
+      mysql_db:
+        name=ttrss
+        state=import
+        target=/var/www/ttrss/schema/ttrss_schema_mysql.sql
+        login_host=db
+        login_user=root
+        login_password={{ lookup('env','MYSQL_ROOT_PASSWORD') }}

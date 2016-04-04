@@ -2,8 +2,21 @@ version: '2'
 services:
   wallabag:
     build: wallabag/
+    environment:
+      - VIRTUAL_HOST=wallabag
+    env_file:
+      - env
     ports:
       - "80"
+    networks:
+      - back
+      - front
+  rdbms:
+    image: mariadb
+    env_file:
+      - env
+    networks:
+      - back
 networks:
   back:
   front:
