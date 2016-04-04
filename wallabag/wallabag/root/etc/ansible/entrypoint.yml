@@ -1,0 +1,30 @@
+---
+- hosts: localhost
+  remote_user: root
+
+  tasks:
+
+    - name: needed dirs
+      file:
+        path={{ item }}
+        state=directory
+      with_items:
+        - /var/www/wallabag/data/db
+        - /var/www/wallabag/data/assets
+
+    - stat:
+        path=/var/www/wallabag/data/db/wallabag.sqlite
+      register: wallabag_db
+
+    - name: copy default db
+      copy:
+        src=wallabag.sqlite
+        dest=/var/www/wallabag/data/db/wallabag.sqlite
+      when: wallabag_db.stat.exists == False
+
+    - name: chown db dir
+      file:
+        path=/var/www/wallabag/data
+        recurse=yes
+        owner=nobody
+        group=nobody

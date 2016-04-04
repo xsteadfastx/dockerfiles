@@ -1,0 +1,21 @@
+version: '2'
+services:
+  wallabag:
+    build:
+      context: wallabag/
+    environment:
+      - VIRTUAL_HOST=wallabag
+    env_file:
+      - env
+    ports:
+      - "80"
+    volumes:
+      - /srv/www/wallabag:/var/www/wallabag/data
+    networks:
+      - back
+      - front
+networks:
+  back:
+  front:
+    external:
+      name: nginx_default
