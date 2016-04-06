@@ -2,6 +2,16 @@
 - hosts: localhost
   remote_user: root
 
+  vars:
+
+    database_driver: "{{ lookup('env', 'SYMFONY__ENV__DATABASE_DRIVER') }}"
+    database_host: "{{ lookup('env', 'SYMFONY__ENV__DATABASE_HOST') }}"
+    database_name: "{{ lookup('env', 'SYMFONY__ENV__DATABASE_NAME') }}"
+    database_password: "{{ lookup('env', 'SYMFONY__ENV__DATABASE_PASSWORD') }}"
+    database_port: "{{ lookup('env', 'SYMFONY__ENV__DATABASE_PORT') }}"
+    database_root_password: "{{ lookup('env', 'MYSQL_ROOT_PASSWORD') }}"
+    database_user: "{{ lookup('env', 'SYMFONY__ENV__DATABASE_USER') }}"
+
   tasks:
 
     - name: needed dirs
@@ -14,17 +24,71 @@
 
     - stat:
         path=/var/www/wallabag/data/db/wallabag.sqlite
-      register: wallabag_db
+      register: wallabag_sqlite_db
+      when: database_driver == 'pdo_sqlite'
 
-    - name: copy default db
+    - name: copy default sqlite db
       copy:
         src=wallabag.sqlite
         dest=/var/www/wallabag/data/db/wallabag.sqlite
-      when: wallabag_db.stat.exists == False
+      when: (database_driver == 'pdo_sqlite') and
+            (wallabag_sqlite_db.stat.exists == False)
 
-    - name: chown db dir
+    - name: wait for db container
+      wait_for:
+        host="{{ database_host }}"
+        port=3306
+      when: database_driver == 'pdo_mysql'
+
+    - name: mariadb db
+      mysql_db:
+        name="{{ database_name }}"
+        state=present
+        login_host="{{ database_host }}"
+        login_user=root
+        login_password="{{ database_root_password }}"
+      notify: import mariadb schema
+      when: database_driver == 'pdo_mysql'
+
+    - name: add mariadb user
+      mysql_user:
+        name="{{ database_user }}"
+        host=%
+        password="{{ database_password }}"
+        priv={{ database_name }}.*:ALL
+        login_host="{{ database_host }}"
+        login_port="{{ database_port }}"
+        login_user=root
+        login_password="{{ database_root_password }}"
+        state=present
+      when: (database_driver == 'pdo_mysql') and
+            (database_user != 'root')
+
+    - name: remove cache
       file:
-        path=/var/www/wallabag/data
+        path=/var/www/wallabag/var/cache
+        state=absent
+
+    - name: run composer
+      shell: SYMFONY_ENV=prod composer install --no-dev -o --prefer-dist
+      args:
+        chdir: /var/www/wallabag
+
+    - name: chown dir
+      file:
+        path=/var/www/wallabag
         recurse=yes
         owner=nobody
         group=nobody
+
+  handlers:
+
+    - name: import mariadb schema
+      mysql_db:
+        name="{{ database_name }}"
+        state=import
+        target=/etc/ansible/files/wallabag.sql
+        login_host="{{ database_host }}"
+        login_user=root
+        login_password="{{ database_root_password }}"
+      when: database_driver == 'pdo_mysql'

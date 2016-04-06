@@ -14,6 +14,7 @@ RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/
       curl \
       git \
       libwebp@testing \
+      mariadb-client \
       nginx \
       pcre \
       php7 \
@@ -27,11 +28,13 @@ RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/
       php7-json@testing \
       php7-mbstring@testing \
       php7-openssl@testing \
+      php7-pdo_mysql@testing \
       php7-pdo_sqlite@testing \
       php7-phar@testing \
       php7-session@testing \
       php7-xml@testing \
       php7@testing\
+      py-mysqldb \
       py-simplejson \
       s6 \
  && rm -rf /var/cache/apk/*
@@ -52,7 +55,7 @@ COPY root /
 RUN cd /var/www/wallabag \
  && SYMFONY_ENV=prod composer install --no-dev -o --prefer-dist
 
-RUN chown -Rv nobody:nobody /var/www/wallabag
+RUN chown -R nobody:nobody /var/www/wallabag
 
 RUN chmod +x /entrypoint.sh
 

@@ -6,14 +6,22 @@ services:
     environment:
       - VIRTUAL_HOST=wallabag
     env_file:
-      - env
+      - env.mariadb
     ports:
       - "80"
-    volumes:
-      - /srv/www/wallabag:/var/www/wallabag/data
+    #volumes:
+    #  - /srv/www/wallabag:/var/www/wallabag/data
     networks:
       - back
       - front
+  db:
+    image: mariadb
+    env_file:
+      - env.mariadb
+    volumes:
+      - /srv/www/wallabag:/var/lib/mysql
+    networks:
+      - back
 networks:
   back:
   front:
