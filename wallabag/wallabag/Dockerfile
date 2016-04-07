@@ -48,9 +48,7 @@ RUN ln -s /usr/bin/php7 /usr/bin/php \
 RUN curl -s http://getcomposer.org/installer | php \
  && mv composer.phar /usr/local/bin/composer
 
-RUN git clone https://github.com/wallabag/wallabag.git /var/www/wallabag \
- && cd /var/www/wallabag \
- && git checkout $WALLABAG_VERSION
+RUN git clone --branch $WALLABAG_VERSION --depth 1 https://github.com/wallabag/wallabag.git /var/www/wallabag
 
 COPY root /
 
