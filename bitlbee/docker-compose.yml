@@ -1,9 +1,11 @@
 version: '2'
 services:
   bitlbee:
-    image: aostanin/bitlbee
+    build:
+      context: bitlbee
     volumes:
-      - "/opt/bitlbee/data:/data"
+      - "/opt/bitlbee/data/bitlbee:/etc/bitlbee"
+      - "/opt/bitlbee/data/users:/var/lib/bitlbee"
     ports:
       - "127.0.0.1:6667:6667"
     external_links:
