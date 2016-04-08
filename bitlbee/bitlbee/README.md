@@ -9,4 +9,4 @@
 $ docker run -v /opt/bitlbee/config:/etc/bitlbee -v /opt/bitlbee/users:/var/lib/bitlbee xsteadfastx/bitlbee
 ```
 
-Connect your irc client to `localhost:6777` and hae fun.
+Connect your irc client to `localhost:6777` and have fun.
