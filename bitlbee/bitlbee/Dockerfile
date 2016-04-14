@@ -1,14 +1,16 @@
 FROM alpine:edge
 MAINTAINER Marvin Steadfast <marvin@xsteadfastx.org>
 
+COPY root /
+
 RUN apk add --update \
       bitlbee \
       su-exec \
- && rm -rf /var/cache/apk/*
+ && apk add --allow-untrusted /tmp/bitlbee-facebook-1.0.0-r0.apk \
+ && rm -rf /var/cache/apk/* \
+ && rm /tmp/bitlbee-facebook-1.0.0-r0.apk
 
 RUN adduser -h /var/lib/bitlbee -H -s /sbin/nologin -D bitlbee
-
-COPY root /
 
 RUN mkdir /var/run/bitlbee \
  && chown bitlbee:bitlbee /var/run/bitlbee
