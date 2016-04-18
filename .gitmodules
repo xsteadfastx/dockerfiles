@@ -1,0 +1,3 @@
+[submodule "wallabag/wallabag"]
+	path = wallabag/wallabag
+	url = https://github.com/wallabag/docker
