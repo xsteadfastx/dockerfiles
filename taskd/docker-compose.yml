@@ -1,0 +1,9 @@
+version: '2'
+services:
+  taskd:
+    build:
+      context: taskd
+    volumes:
+      - /opt/taskd:/var/taskd
+    ports:
+      - "0.0.0.0:53589:53589"
