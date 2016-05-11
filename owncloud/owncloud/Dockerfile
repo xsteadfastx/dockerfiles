@@ -1,30 +1,28 @@
-FROM alpine:3.3
+FROM alpine:edge
 ENV owncloud_version 9.0.0
 
-RUN echo "@edge http://dl-4.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
- && echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
- && apk add --update \
-    s6@edge \
+RUN apk add --update \
+    s6 \
     nginx \
-    php-fpm \
-    php-gd \
-    php-json \
-    php-mysql \
-    php-curl \
-    php-intl \
-    php-mcrypt \
-    php-imagick@testing \
-    php-sqlite3 \
-    php-apcu \
-    php-pdo \
-    php-pdo_sqlite \
-    php-zip \
-    php-dom \
-    php-xml \
-    php-xmlreader \
-    php-ctype \
-    php-zlib \
-    php-iconv \
+    php5-fpm \
+    php5-gd \
+    php5-json \
+    php5-mysql \
+    php5-curl \
+    php5-intl \
+    php5-mcrypt \
+    php5-imagick \
+    php5-sqlite3 \
+    php5-apcu \
+    php5-pdo \
+    php5-pdo_sqlite \
+    php5-zip \
+    php5-dom \
+    php5-xml \
+    php5-xmlreader \
+    php5-ctype \
+    php5-zlib \
+    php5-iconv \
  && rm -rf /var/cache/apk/*
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
