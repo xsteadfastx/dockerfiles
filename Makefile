@@ -1,4 +1,4 @@
-.PHONY: help nginx irc all
+.PHONY: help nginx irc taskd all
 
 help: ## Show this help
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
@@ -15,7 +15,7 @@ irc: ## Get communication services up
 	cd /opt/dockerfiles/prosody && docker-compose up -d
 	cd /opt/dockerfiles/bitlbee && docker-compose up -d
 
-taskd: ## Get taskwarrior servies up
+taskd: ## Get taskwarrior services up
 	cd /opt/dockerfiles/taskd && docker-compose up -d
 
 all: nginx irc taskd
