@@ -3,12 +3,12 @@ MAINTAINER Marvin Steadfast <marvin@xsteadfastx.org>
 
 COPY root /
 
-RUN apk add --update \
+RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+ && apk add --update \
       bitlbee \
+      bitlbee-facebook@testing \
       su-exec \
- && apk add --allow-untrusted /tmp/bitlbee-facebook-1.0.0-r0.apk \
- && rm -rf /var/cache/apk/* \
- && rm /tmp/bitlbee-facebook-1.0.0-r0.apk
+ && rm -rf /var/cache/apk/*
 
 RUN adduser -h /var/lib/bitlbee -H -s /sbin/nologin -D bitlbee
 
