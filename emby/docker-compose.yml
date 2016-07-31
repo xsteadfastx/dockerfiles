@@ -9,7 +9,7 @@ services:
       - "/home/marv/Downloads/putio:/downloads/putio"
     environment:
       - TZ=Europe/Berlin
-      - AUTO_UPDATES_ON=true
+      - AUTO_UPDATES_ON=false
       - MB_USER_ID=1000
       - MB_GROUP_ID=1000
     network_mode: "host"
