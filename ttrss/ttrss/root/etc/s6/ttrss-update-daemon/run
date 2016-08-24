@@ -1,4 +1,4 @@
 #!/bin/sh
 
 USER=nobody
-exec gosu $USER php /var/www/ttrss/update_daemon2.php
+exec su-exec $USER php /var/www/ttrss/update_daemon2.php

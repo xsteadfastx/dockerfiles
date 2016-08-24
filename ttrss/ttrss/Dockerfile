@@ -1,28 +1,28 @@
 FROM alpine:edge
 
-ADD https://github.com/tianon/gosu/releases/download/1.6/gosu-amd64 /usr/sbin/gosu
-
 RUN apk add --update \
-    s6 \
     ansible \
     git \
-    nginx \
-    php5-fpm \
-    php5-json \
-    php5-curl \
-    php5-gd \
-    php5-mysql \
-    php5-mcrypt \
-    php5-cgi \
-    php5-apcu \
-    php5-dom \
-    php5-pcntl \
-    php5-posix \
-    py-simplejson \
-    py-mysqldb \
     mariadb-client \
- && rm -rf /var/cache/apk/* \
- && chmod +x /usr/sbin/gosu
+    nginx \
+    php5-apcu \
+    php5-cgi \
+    php5-curl \
+    php5-dom \
+    php5-fpm \
+    php5-gd \
+    php5-json \
+    php5-mcrypt \
+    php5-mysql \
+    php5-mysqli \
+    php5-pcntl \
+    php5-pdo_mysql \
+    php5-posix \
+    py-mysqldb \
+    py-simplejson \
+    s6 \
+    su-exec \
+ && rm -rf /var/cache/apk/*
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
