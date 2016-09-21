@@ -1,0 +1,15 @@
+version: '2'
+services:
+  nextcloud:
+    build: nextcloud/
+    ports:
+      - "80"
+    volumes:
+      - "/srv/www/next/config:/var/www/nextcloud/config"
+      - "/srv/www/nextcloud/data:/var/www/nextcloud/data"
+    environment:
+      - VIRTUAL_HOST=cloud
+networks:
+  default:
+    external:
+      name: nginx_default
