@@ -1,5 +1,5 @@
 FROM alpine:edge
-ENV owncloud_version 9.0.4
+ENV owncloud_version 9.1.1
 
 RUN apk add --update \
     s6 \
