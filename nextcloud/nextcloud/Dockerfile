@@ -1,5 +1,5 @@
 FROM alpine:edge
-ENV nextcloud_version 10.0.0
+ENV nextcloud_version 10.0.1
 
 RUN apk add --update \
     s6 \
