@@ -10,7 +10,7 @@ RUN groupadd tox \
  && echo deb-src http://ppa.launchpad.net/fkrull/deadsnakes/ubuntu trusty main >> /etc/apt/sources.list \
  && apt-get update \
  && apt-get install -y \
-        python3-pip \
+        curl \
         python2.3 \
         python2.4 \
         python2.5 \
@@ -21,5 +21,7 @@ RUN groupadd tox \
         python3.3 \
         python3.4 \
         python3.5 \
+        rsync \
  && rm -rf /var/lib/apt/lists/* \
- && pip3 install tox
+ && curl https://bootstrap.pypa.io/get-pip.py | python3.5 \
+ && pip install tox
