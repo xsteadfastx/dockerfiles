@@ -10,15 +10,16 @@ RUN groupadd tox \
  && echo deb-src http://ppa.launchpad.net/fkrull/deadsnakes/ubuntu trusty main >> /etc/apt/sources.list \
  && apt-get update \
  && apt-get install -y \
-        python-pip \
+        python3-pip \
         python2.3 \
         python2.4 \
         python2.5 \
         python2.6 \
+        python2.7 \
         python3.1 \
         python3.2 \
         python3.3 \
         python3.4 \
         python3.5 \
  && rm -rf /var/lib/apt/lists/* \
- && pip install tox
+ && pip3 install tox
