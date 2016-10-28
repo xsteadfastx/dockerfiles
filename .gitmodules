@@ -1,3 +1,0 @@
-[submodule "wallabag/wallabag"]
-	path = wallabag/wallabag
-	url = git@github.com:xsteadfastx/wallabag.git
