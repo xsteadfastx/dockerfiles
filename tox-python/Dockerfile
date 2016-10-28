@@ -23,7 +23,7 @@ RUN gpg --keyserver keyserver.ubuntu.com --recv-keys DB82666C \
         sudo \
  && rm -rf /var/lib/apt/lists/* \
  && groupadd -g 1000 tox \
- && useradd -u 1000 -g 1000 -G sudo tox \
+ && useradd -u 1000 -g 1000 -m -G sudo tox \
  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
  && curl https://bootstrap.pypa.io/get-pip.py | python3.5 \
  && pip install tox
