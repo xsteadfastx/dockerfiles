@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+  webserver:
+    image: pitkley/paperless
+    ports:
+      - "8000"
+    volumes:
+      - /opt/paperless/data:/usr/src/paperless/data
+      - /opt/paperless/media:/usr/src/paperless/media
+    env_file: docker-compose.env
+    environment:
+      - PAPERLESS_OCR_LANGUAGES=deu
+      - VIRTUAL_HOST=paperless
+      - VIRTUAL_PORT=8000
+    command: ["runserver", "0.0.0.0:8000"]
+
+  consumer:
+    image: pitkley/paperless
+    volumes:
+      - /home/marv/ownCloud/paperless:/consume
+      - /opt/paperless/data:/usr/src/paperless/data
+      - /opt/paperless/export:/export
+      - /opt/paperless/media:/usr/src/paperless/media
+    env_file: docker-compose.env
+    command: ["document_consumer"]
+
+networks:
+  default:
+    external:
+      name: nginx_default

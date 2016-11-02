@@ -9,6 +9,7 @@ nginx: ## Get nginx services up
 	cd /opt/dockerfiles/nextcloud && docker-compose up -d
 	cd /opt/dockerfiles/ttrss && docker-compose up -d
 	cd /opt/dockerfiles/wallabag && docker-compose up -d
+	cd /opt/dockerfiles/paperless && docker-compose up -d
 	cd /opt/dockerfiles/nginx && docker-compose up -d
 
 irc: ## Get communication services up
