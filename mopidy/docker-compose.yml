@@ -5,6 +5,9 @@ services:
     build:
       context: mopidy/
     command: mopidy --config /etc/mopidy/mopidy.conf
+    volumes:
+      - /home/marv/Media/Musik:/var/lib/mopidy/media:ro
+      - /opt/mopidy/local:/var/lib/mopidy/.local
     ports:
       - "6600:6600"
       - "6680:6680"
