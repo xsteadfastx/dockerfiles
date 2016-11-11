@@ -17,6 +17,8 @@ RUN apt-get update \
         gstreamer1.0-tools \
         mopidy \
         mopidy-internetarchive \
+        mopidy-scrobbler \
+        mopidy-soundcloud \
         python-pip \
  && rm -rf /var/lib/apt/lists/* \
  && pip install \
