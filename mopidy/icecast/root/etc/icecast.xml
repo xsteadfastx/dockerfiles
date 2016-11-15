@@ -27,7 +27,7 @@
 
     <mount>
         <mount-name>/mopidy</mount-name>
-        <fallback-mount>/void.ogg</fallback-mount>
+        <fallback-mount>/void.mp3</fallback-mount>
         <fallback-override>1</fallback-override>
     </mount>
 

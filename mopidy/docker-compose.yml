@@ -5,10 +5,11 @@ services:
     build:
       context: mopidy/
     command: mopidy --config /etc/mopidy/mopidy.conf
+    restart: on-failure:10
     volumes:
       - /home/marv/Media/Musik:/var/lib/mopidy/media:ro
-      - /opt/mopidy/mopidy.conf:/var/lib/mopidy/.config/mopidy/mopidy.conf:ro
       - /opt/mopidy/local:/var/lib/mopidy/.local
+      - /opt/mopidy/mopidy.conf:/var/lib/mopidy/.config/mopidy/mopidy.conf
     ports:
       - "6600:6600"
       - "6680:6680"
@@ -16,5 +17,6 @@ services:
   icecast:
     build:
       context: icecast/
+    restart: on-failure:10
     ports:
       - "8000:8000"
