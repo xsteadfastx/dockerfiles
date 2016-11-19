@@ -11,6 +11,7 @@ RUN apt-get update \
  && apt-get install -y \
         gir1.2-gst-plugins-base-1.0 \
         gir1.2-gstreamer-1.0 \
+        git \
         gstreamer1.0-plugins-bad \
         gstreamer1.0-plugins-good \
         gstreamer1.0-plugins-ugly \
@@ -18,13 +19,14 @@ RUN apt-get update \
         mopidy \
         mopidy-internetarchive \
         mopidy-scrobbler \
-        mopidy-soundcloud \
         python-pip \
  && rm -rf /var/lib/apt/lists/* \
+ && pip install -U pip \
  && pip install \
         Mopidy-Beets \
         Mopidy-Moped \
         Mopidy-TuneIn \
+        git+https://github.com/mopidy/mopidy-soundcloud#egg=mopidy-soundcloud \
  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch" \
  && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc" \
