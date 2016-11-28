@@ -1,7 +1,7 @@
 version: '2'
 services:
   prosody:
-    image: prosody/prosody
+    image: prosody/prosody:0.9.9
     volumes:
       - /opt/prosody/config:/etc/prosody
       - /opt/prosody/data:/var/lib/prosody
