@@ -4,19 +4,16 @@ services:
   mopidy:
     build:
       context: mopidy/
-    command: mopidy --config /etc/mopidy/mopidy.conf
     restart: on-failure:10
     volumes:
       - /home/marv/Media/Musik:/var/lib/mopidy/media:ro
       - /opt/mopidy/local:/var/lib/mopidy/.local
       - /opt/mopidy/mopidy.conf:/var/lib/mopidy/.config/mopidy/mopidy.conf
     ports:
+      - "1704:1704"
+      - "1705:1705"
       - "6600:6600"
       - "6680:6680"
-
-  icecast:
-    build:
-      context: icecast/
-    restart: on-failure:10
-    ports:
-      - "8000:8000"
+    logging:
+      options:
+        max-size: 5m

@@ -1,7 +1,7 @@
 FROM debian:jessie
 
 ENV LANG C.UTF-8
-ENV GOSU_VERSION 1.9
+ENV SNAPCASTVERSION 0.10.0
 
 RUN apt-get update \
  && apt-get install -y wget \
@@ -20,30 +20,26 @@ RUN apt-get update \
         mopidy-internetarchive \
         mopidy-scrobbler \
         python-pip \
+        supervisor \
+ && wget 'https://github.com/badaix/snapcast/releases/download/v'$SNAPCASTVERSION'/snapserver_'$SNAPCASTVERSION'_amd64.deb' \
+ && dpkg -i --force-all 'snapserver_'$SNAPCASTVERSION'_amd64.deb' \
+ && apt-get -f install -y \
+ && rm 'snapserver_'$SNAPCASTVERSION'_amd64.deb' \
  && rm -rf /var/lib/apt/lists/* \
  && pip install -U pip \
  && pip install \
         Mopidy-Beets \
+        Mopidy-MusicBox-Webclient \
         Mopidy-Moped \
         Mopidy-TuneIn \
         git+https://github.com/mopidy/mopidy-soundcloud#egg=mopidy-soundcloud \
-        git+https://github.com/xsteadfastx/mopidy-emby#egg=mopidy-emby \
- && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
- && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch" \
- && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc" \
- && export GNUPGHOME="$(mktemp -d)" \
- && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
- && gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
- && rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
- && chmod +x /usr/local/bin/gosu
+        git+https://github.com/xsteadfastx/mopidy-emby#egg=mopidy-emby
 
 COPY root /
 
 VOLUME /var/lib/mopidy/local
 VOLUME /var/lib/mopidy/media
 
-EXPOSE 6680
-EXPOSE 6600
+EXPOSE 1704 1705 6680 6600
 
-ENTRYPOINT ["/bin/entrypoint.sh"]
-CMD ["mopidy"]
+CMD chown mopidy:audio /var/lib/mopidy && chown -R mopidy:audio /var/lib/mopidy/.config && /usr/bin/supervisord -c /etc/supervisord.conf
