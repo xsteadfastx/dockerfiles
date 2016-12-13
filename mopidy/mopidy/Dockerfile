@@ -18,6 +18,7 @@ RUN apt-get update \
         gstreamer1.0-tools \
         mopidy \
         mopidy-internetarchive \
+        mopidy-podcast \
         mopidy-scrobbler \
         python-pip \
         supervisor \
@@ -28,10 +29,10 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/* \
  && pip install -U pip \
  && pip install \
-        Mopidy-Beets \
-        Mopidy-MusicBox-Webclient \
         Mopidy-Moped \
+        Mopidy-MusicBox-Webclient \
         Mopidy-TuneIn \
+        Mopidy-YouTube \
         git+https://github.com/mopidy/mopidy-soundcloud#egg=mopidy-soundcloud \
         git+https://github.com/xsteadfastx/mopidy-emby#egg=mopidy-emby
 
