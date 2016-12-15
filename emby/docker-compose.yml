@@ -2,6 +2,11 @@ version: '2'
 services:
   emby:
     image: emby/embyserver
+    ports:
+      - "8096:8096"
+      - "8920:8920"
+      - "7359:7359/udp"
+      - "1900:1900/udp"
     volumes:
       - "/srv/www/emby/config:/config"
       - "/home/marv/Media/Musik:/media/Musik:ro"
@@ -12,4 +17,3 @@ services:
       - AUTO_UPDATES_ON=false
       - MB_USER_ID=1000
       - MB_GROUP_ID=1000
-    network_mode: "host"
