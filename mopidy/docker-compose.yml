@@ -17,3 +17,9 @@ services:
     logging:
       options:
         max-size: 5m
+
+  upmdcli:
+    build:
+      context: upmdcli/
+    command: gosu nobody upmpdcli -h 192.168.39.115
+    network_mode: "host"
