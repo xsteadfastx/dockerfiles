@@ -19,6 +19,7 @@ RUN apt-get update \
  && gpg --export '7808CE96D38B9201' | apt-key add - \
  && echo "deb http://www.lesbonscomptes.com/upmpdcli/downloads/debian-jessie/ unstable main" > /etc/apt/sources.list.d/upmpdcli.list \
  && echo "deb-src http://www.lesbonscomptes.com/upmpdcli/downloads/debian-jessie/ unstable main" >> /etc/apt/sources.list.d/upmpdcli.list \
+ && useradd -m upmpdcli \
  && apt-get update \
  && apt-get install -y \
         upmpdcli \
