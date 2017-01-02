@@ -5,10 +5,12 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "8448:8448"
     volumes:
       - /etc/nginx:/etc/nginx
       - /etc/letsencrypt:/etc/letsencrypt
       - /var/log/nginx:/var/log/nginx
+      - /opt/synapse:/opt/synapse
   gen:
     image: jwilder/docker-gen
     volumes:

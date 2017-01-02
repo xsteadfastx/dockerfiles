@@ -1,0 +1,23 @@
+version: '2'
+services:
+  synapse:
+    build:
+      context: synapse/
+      args:
+        - BV_SYN=develop
+    ports:
+      - "8008"
+    volumes:
+      - "/opt/synapse:/data"
+    command: start
+    environment:
+      - VIRTUAL_HOST=synapse
+      - VIRTUAL_PORT=8008
+    logging:
+      options:
+        max-size: 5m
+
+networks:
+  default:
+    external:
+      name: nginx_default
