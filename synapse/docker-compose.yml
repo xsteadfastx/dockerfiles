@@ -1,5 +1,6 @@
 version: '2'
 services:
+
   synapse:
     build:
       context: synapse/
@@ -16,6 +17,15 @@ services:
     logging:
       options:
         max-size: 5m
+
+  matrix-ircd:
+    build:
+      context: matrix-ircd/
+    ports:
+      - "5999:5999"
+    volumes:
+      - "/opt/synapse:/opt/synapse"
+    command: gosu matrix cargo run -- --url https://matrix.xsteadfastx.org --bind 0.0.0.0:5999 --cert /opt/synapse/fullchain.pem --pkey /opt/synapse/privkey.pem
 
 networks:
   default:
