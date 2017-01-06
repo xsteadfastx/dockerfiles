@@ -5,7 +5,7 @@ services:
     build:
       context: synapse/
       args:
-        - BV_SYN=develop
+        - BV_SYN=v0.18.6-rc3
     ports:
       - "8008"
     volumes:
