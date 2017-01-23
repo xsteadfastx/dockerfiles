@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  mayanedms:
+    build:
+      context: mayanedms/
+    ports:
+      - "81:80"
+    volumes:
+      - mayan_media:/var/lib/mayan
+      - mayan_settings:/etc/mayan
+
+volumes:
+  mayan_media:
+  mayan_settings:

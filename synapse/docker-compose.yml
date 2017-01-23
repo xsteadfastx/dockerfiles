@@ -5,7 +5,7 @@ services:
     build:
       context: synapse/
       args:
-        - BV_SYN=v0.18.7
+        - BV_SYN=develop
     ports:
       - "8008"
     volumes:
@@ -17,6 +17,11 @@ services:
     logging:
       options:
         max-size: 5m
+
+  db:
+    image: postgres:alpine
+    volumes:
+      - "/opt/synapse_db:/var/lib/postgresql/data"
 
   matrix-ircd:
     build:
