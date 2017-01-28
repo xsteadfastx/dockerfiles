@@ -14,7 +14,7 @@ services:
     networks:
       - back
       - front
-  db:
+  wallabag_data:
     image: mariadb
     env_file:
       - env.mariadb

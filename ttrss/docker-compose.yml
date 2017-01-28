@@ -11,7 +11,7 @@ services:
     networks:
       - back
       - front
-  db:
+  ttrss_data:
     image: mariadb
     volumes:
       - /srv/www/ttrss:/var/lib/mysql

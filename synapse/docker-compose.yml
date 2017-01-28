@@ -18,7 +18,7 @@ services:
       options:
         max-size: 5m
 
-  db:
+  synapse_data:
     image: postgres:alpine
     volumes:
       - "/opt/synapse_db:/var/lib/postgresql/data"
