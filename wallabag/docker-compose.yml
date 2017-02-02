@@ -9,11 +9,10 @@ services:
       - env.mariadb
     ports:
       - "80"
-    #volumes:
-    #  - /srv/www/wallabag:/var/www/wallabag/data
     networks:
       - back
       - front
+
   wallabag_data:
     image: mariadb
     env_file:
@@ -22,6 +21,7 @@ services:
       - /srv/www/wallabag:/var/lib/mysql
     networks:
       - back
+
 networks:
   back:
   front:

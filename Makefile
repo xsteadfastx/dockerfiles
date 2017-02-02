@@ -9,6 +9,7 @@ nginx: ## Get nginx services up
 	cd /opt/dockerfiles/nextcloud && docker-compose up -d
 	cd /opt/dockerfiles/ttrss && docker-compose up -d
 	cd /opt/dockerfiles/wallabag && docker-compose up -d
+	cd /opt/dockerfiles/synapse && docker-compose up -d
 	cd /opt/dockerfiles/nginx && docker-compose up -d
 
 irc: ## Get communication services up
@@ -22,4 +23,4 @@ taskd: ## Get taskwarrior services up
 mopidy: ## Get mopidy services up
 	cd /opt/dockerfiles/mopidy && docker-compose up -d
 
-all: nginx irc taskd mopidy
+all: nginx irc mopidy
