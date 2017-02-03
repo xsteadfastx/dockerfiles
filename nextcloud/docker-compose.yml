@@ -1,12 +1,13 @@
 version: '2'
 services:
   nextcloud:
-    build: nextcloud/
+    image: wonderfall/nextcloud
     ports:
-      - "80"
+      - "8888"
     volumes:
-      - "/srv/www/next/config:/var/www/nextcloud/config"
-      - "/srv/www/nextcloud/data:/var/www/nextcloud/data"
+      - "/srv/www/nextcloud/config:/config"
+      - "/srv/www/nextcloud/data:/data"
+      - "/srv/www/nextcloud/data:/apps2"
     environment:
       - VIRTUAL_HOST=cloud
 networks:

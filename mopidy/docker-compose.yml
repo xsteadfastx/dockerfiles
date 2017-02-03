@@ -18,8 +18,8 @@ services:
       options:
         max-size: 5m
 
-  upmpdcli:
-    build:
-      context: upmpdcli/
-    command: gosu upmpdcli upmpdcli -h 192.168.39.115
-    network_mode: "host"
+  #upmpdcli:
+  #  build:
+  #    context: upmpdcli/
+  #  command: gosu upmpdcli upmpdcli -h 192.168.39.115
+  #  network_mode: "host"
