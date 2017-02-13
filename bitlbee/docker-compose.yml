@@ -3,6 +3,7 @@ services:
   bitlbee:
     build:
       context: bitlbee
+    restart: always
     volumes:
       - "/opt/bitlbee/data/bitlbee:/etc/bitlbee"
       - "/opt/bitlbee/data/users:/var/lib/bitlbee"
