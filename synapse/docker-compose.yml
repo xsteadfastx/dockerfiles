@@ -1,11 +1,11 @@
-version: '2'
+version: '3'
 services:
 
   synapse:
     build:
       context: synapse/
       args:
-        - BV_SYN=v0.19.1
+        - BV_SYN=v0.19.2
     restart: always
     ports:
       - "8008"
