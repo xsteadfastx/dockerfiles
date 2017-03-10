@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   nextcloud:
     image: wonderfall/nextcloud
@@ -10,6 +10,14 @@ services:
       - "/srv/www/nextcloud/data:/apps2"
     environment:
       - VIRTUAL_HOST=cloud
+    links:
+      - nextcloud_redis:redis
+    depends_on:
+      - nextcloud_redis
+  nextcloud_redis:
+    image: redis:alpine
+    ports:
+      - "6379"
 networks:
   default:
     external:
