@@ -3,15 +3,23 @@ FROM debian:jessie
 ARG RUST_VERSION=nightly
 ARG GOSU_VERSION=1.9
 
-RUN set -x \
+ENV OPENSSL_DIR=/usr/local
+
+RUN set -ex \
  && apt-get update \
  && apt-get install -y --no-install-recommends \
         build-essential \
         ca-certificates \
         curl \
         git \
-        libssl-dev \
         wget \
+ && curl -sO https://www.openssl.org/source/openssl-1.1.0e.tar.gz \
+ && tar xf openssl-1.1.0e.tar.gz \
+ && cd openssl-1.1.0e \
+ && ./Configure linux-x86_64 -fPIC \
+ && make -j$(nproc) \
+ && make install \
+ && cd ../ \
  && curl -sO https://static.rust-lang.org/dist/rust-$RUST_VERSION-x86_64-unknown-linux-gnu.tar.gz \
  && tar -xzf rust-$RUST_VERSION-x86_64-unknown-linux-gnu.tar.gz \
  && ./rust-$RUST_VERSION-x86_64-unknown-linux-gnu/install.sh --without=rust-docs \
@@ -27,6 +35,8 @@ RUN set -x \
  && apt-get remove --purge -y curl wget \
  && apt-get autoremove -y \
  && rm -rf \
+        openssl-1.1.0e \
+        openssl-1.1.0e.tar.gz \
         rust-$RUST_VERSION-x86_64-unknown-linux-gnu \
         rust-$RUST_VERSION-x86_64-unknown-linux-gnu.tar.gz \
         /var/lib/apt/lists/* \
@@ -37,7 +47,7 @@ RUN set -x \
 USER matrix
 
 RUN cd /home/matrix \
- && git clone https://github.com/matrix-org/matrix-ircd.git /home/matrix/matrix-ircd \
+ && git clone --depth 1 https://github.com/matrix-org/matrix-ircd.git /home/matrix/matrix-ircd \
  && cd /home/matrix/matrix-ircd \
  && cargo build
 

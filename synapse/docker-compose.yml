@@ -5,7 +5,7 @@ services:
     build:
       context: synapse/
       args:
-        - BV_SYN=v0.19.2
+        - BV_SYN=v0.19.3-rc1
     restart: always
     ports:
       - "8008"
@@ -29,9 +29,7 @@ services:
       context: matrix-ircd/
     ports:
       - "5999:5999"
-    volumes:
-      - "/opt/synapse:/opt/synapse"
-    command: gosu matrix cargo run -- --url https://matrix.xsteadfastx.org --bind 0.0.0.0:5999 --cert /opt/synapse/fullchain.pem --pkey /opt/synapse/privkey.pem
+    command: gosu matrix cargo run -- --url https://matrix.xsteadfastx.org --bind 0.0.0.0:5999
 
 networks:
   default:
