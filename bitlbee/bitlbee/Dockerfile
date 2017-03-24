@@ -1,14 +1,14 @@
-FROM alpine:edge
+FROM alpine:3.5
 MAINTAINER Marvin Steadfast <marvin@xsteadfastx.org>
 
 COPY root /
 
 RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
- && apk add --update \
+ && apk add --no-cache \
       bitlbee \
       bitlbee-facebook@testing \
-      su-exec \
- && rm -rf /var/cache/apk/*
+      bitlbee-otr \
+      su-exec
 
 RUN adduser -h /var/lib/bitlbee -H -s /sbin/nologin -D bitlbee
 

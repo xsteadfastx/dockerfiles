@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   bitlbee:
     build:
@@ -11,6 +11,9 @@ services:
       - "127.0.0.1:6667:6667"
     external_links:
       - prosody_prosody_1:prosody
+    logging:
+      options:
+        max-size: 5m
 
 networks:
   default:
