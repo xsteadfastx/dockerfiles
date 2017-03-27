@@ -1,29 +1,42 @@
-FROM ubuntu:trusty
+FROM debian:jessie
 
 ENV LANG C.UTF-8
 
-RUN gpg --keyserver keyserver.ubuntu.com --recv-keys DB82666C \
- && gpg --export DB82666C | apt-key add - \
- && echo deb http://ppa.launchpad.net/fkrull/deadsnakes/ubuntu trusty main >> /etc/apt/sources.list \
- && echo deb-src http://ppa.launchpad.net/fkrull/deadsnakes/ubuntu trusty main >> /etc/apt/sources.list \
+RUN set -ex \
  && apt-get update \
  && apt-get install -y \
+        bash \
         build-essential \
         curl \
-        python2.3-dev \
-        python2.4-dev \
-        python2.5-dev \
-        python2.6-dev \
-        python2.7-dev \
-        python3.1-dev \
-        python3.2-dev \
-        python3.3-dev \
-        python3.4-dev \
-        python3.5-dev \
-        sudo \
- && rm -rf /var/lib/apt/lists/* \
- && groupadd -g 1000 tox \
- && useradd -u 1000 -g 1000 -m -G sudo tox \
- && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
- && curl https://bootstrap.pypa.io/get-pip.py | python3.5 \
- && pip install tox
+        git \
+        libbz2-dev \
+        libncurses5-dev \
+        libncursesw5-dev \
+        libreadline-dev \
+        libsqlite3-dev \
+        libssl-dev \
+        llvm \
+        make \
+        wget \
+        xz-utils \
+        zlib1g-dev \
+ && git clone https://github.com/yyuu/pyenv.git ~/.pyenv \
+ && echo 'export PYENV_ROOT="~/.pyenv"' >> ~/.bashrc \
+ && echo 'export PATH="~/.pyenv/bin:$PATH"' >> ~/.bashrc \
+ &&  ~/.pyenv/bin/pyenv install 2.1.3 \
+ &&  ~/.pyenv/bin/pyenv install 2.2.3 \
+ &&  ~/.pyenv/bin/pyenv install 2.3.7 \
+ &&  ~/.pyenv/bin/pyenv install 2.4.6 \
+ &&  ~/.pyenv/bin/pyenv install 2.5.6 \
+ &&  ~/.pyenv/bin/pyenv install 2.6.9 \
+ &&  ~/.pyenv/bin/pyenv install 2.7.9 \
+ &&  ~/.pyenv/bin/pyenv install 3.3.6 \
+ &&  ~/.pyenv/bin/pyenv install 3.4.6 \
+ &&  ~/.pyenv/bin/pyenv install 3.5.3 \
+ &&  ~/.pyenv/bin/pyenv install 3.6.1 \
+ &&  ~/.pyenv/bin/pyenv global 3.6.1 3.5.3 3.4.6 3.3.6 2.7.9 2.6.9 2.5.6 2.4.6 2.3.7 2.2.3 2.1.3 \
+ &&  ~/.pyenv/shims/pip3.6 install tox \
+ && echo 'eval "$(pyenv init -)"' >> ~/.bashrc \
+ && rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT ["/bin/bash"]
