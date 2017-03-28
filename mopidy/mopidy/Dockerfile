@@ -1,7 +1,7 @@
 FROM debian:jessie
 
 ENV LANG C.UTF-8
-ENV SNAPCASTVERSION 0.10.0
+ENV SNAPCASTVERSION 0.11.1
 
 RUN apt-get update \
  && apt-get install -y wget \
