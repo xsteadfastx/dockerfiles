@@ -26,6 +26,7 @@ RUN set -ex \
  && wget https://github.com/badaix/snapcast/releases/download/v0.11.1/snapclient_0.11.1_amd64.deb -O /tmp/snapclient.deb \
  && dpkg -i /tmp/snapclient.deb \
  && rm /tmp/snapclient.deb \
+ && echo autospawn=no >> /etc/pulse/client.conf \
  && echo enable-shm=no >> /etc/pulse/client.conf \
  && apt-get purge -y --auto-remove \
         ca-certificates \
