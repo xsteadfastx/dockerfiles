@@ -1,6 +1,3 @@
 [submodule "wallabag/wallabag"]
 	path = wallabag/wallabag
 	url = https://github.com/xsteadfastx/wallabag.git
-[submodule "synapse/synapse"]
-	path = synapse/synapse
-	url = git@github.com:xsteadfastx/docker-matrix.git

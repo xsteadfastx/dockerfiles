@@ -29,12 +29,12 @@ RUN set -ex \
  &&  ~/.pyenv/bin/pyenv install 2.4.6 \
  &&  ~/.pyenv/bin/pyenv install 2.5.6 \
  &&  ~/.pyenv/bin/pyenv install 2.6.9 \
- &&  ~/.pyenv/bin/pyenv install 2.7.9 \
+ &&  ~/.pyenv/bin/pyenv install 2.7.13 \
  &&  ~/.pyenv/bin/pyenv install 3.3.6 \
  &&  ~/.pyenv/bin/pyenv install 3.4.6 \
  &&  ~/.pyenv/bin/pyenv install 3.5.3 \
  &&  ~/.pyenv/bin/pyenv install 3.6.1 \
- &&  ~/.pyenv/bin/pyenv global 3.6.1 3.5.3 3.4.6 3.3.6 2.7.9 2.6.9 2.5.6 2.4.6 2.3.7 2.2.3 2.1.3 \
+ &&  ~/.pyenv/bin/pyenv global 3.6.1 3.5.3 3.4.6 3.3.6 2.7.13 2.6.9 2.5.6 2.4.6 2.3.7 2.2.3 2.1.3 \
  &&  ~/.pyenv/shims/pip3.6 install tox \
  && echo 'eval "$(pyenv init -)"' >> ~/.bashrc \
  && rm -rf /var/lib/apt/lists/*
