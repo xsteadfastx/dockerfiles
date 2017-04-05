@@ -1,11 +1,13 @@
 FROM debian:jessie
 
 ENV LANG C.UTF-8
+ENV HOME /root
+ENV PYENV_ROOT $HOME/.pyenv
+ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 RUN set -ex \
  && apt-get update \
  && apt-get install -y \
-        bash \
         build-essential \
         curl \
         git \
@@ -21,8 +23,6 @@ RUN set -ex \
         xz-utils \
         zlib1g-dev \
  && git clone https://github.com/yyuu/pyenv.git ~/.pyenv \
- && echo 'export PYENV_ROOT="~/.pyenv"' >> ~/.bashrc \
- && echo 'export PATH="~/.pyenv/bin:$PATH"' >> ~/.bashrc \
  &&  ~/.pyenv/bin/pyenv install 2.1.3 \
  &&  ~/.pyenv/bin/pyenv install 2.2.3 \
  &&  ~/.pyenv/bin/pyenv install 2.3.7 \
@@ -36,7 +36,5 @@ RUN set -ex \
  &&  ~/.pyenv/bin/pyenv install 3.6.1 \
  &&  ~/.pyenv/bin/pyenv global 3.6.1 3.5.3 3.4.6 3.3.6 2.7.13 2.6.9 2.5.6 2.4.6 2.3.7 2.2.3 2.1.3 \
  &&  ~/.pyenv/shims/pip3.6 install tox \
- && echo 'eval "$(pyenv init -)"' >> ~/.bashrc \
+ && ~/.pyenv/bin/pyenv rehash \
  && rm -rf /var/lib/apt/lists/*
-
-ENTRYPOINT ["/bin/bash"]
