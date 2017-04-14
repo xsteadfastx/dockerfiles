@@ -1,0 +1,58 @@
+version: '2'
+services:
+  db:
+    restart: always
+    image: postgres:alpine
+    volumes:
+      - /opt/mastodon/db:/var/lib/postgresql/data
+    logging:
+      options:
+        max-size: 5m
+  redis:
+    restart: always
+    image: redis:alpine
+    logging:
+      options:
+        max-size: 5m
+  web:
+    restart: always
+    build: mastodon/
+    env_file: /opt/mastodon/.env.production
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./mastodon/public/assets:/mastodon/public/assets
+      - ./mastodon/public/system:/mastodon/public/system
+    logging:
+      options:
+        max-size: 5m
+  streaming:
+    restart: always
+    build: mastodon/
+    env_file: /opt/mastodon/.env.production
+    command: npm run start
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+      - redis
+    logging:
+      options:
+        max-size: 5m
+  sidekiq:
+    restart: always
+    build: mastodon/
+    env_file: /opt/mastodon/.env.production
+    command: bundle exec sidekiq -q default -q mailers -q pull -q push
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./mastodon/public/system:/mastodon/public/system
+    logging:
+      options:
+        max-size: 5m
