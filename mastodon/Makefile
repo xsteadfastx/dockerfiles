@@ -1,4 +1,4 @@
-.PHONY: clean migrate assets
+.PHONY: clean migrate assets confirm
 
 clean:
 	docker-compose run --rm web rake mastodon:media:clear
@@ -11,3 +11,6 @@ migrate:
 
 assets:
 	docker-compose run --rm web rails assets:precompile
+
+confirm:
+	docker-compose run --rm web rails mastodon:confirm_email USER_EMAIL=$(USER_EMAIL)
