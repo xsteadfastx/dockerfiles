@@ -4,3 +4,6 @@
 [submodule "synapse/synapse"]
 	path = synapse/synapse
 	url = https://github.com/xsteadfastx/docker-matrix.git
+[submodule "mastodon/mastodon"]
+	path = mastodon/mastodon
+	url = https://github.com/xsteadfastx/mastodon.git
