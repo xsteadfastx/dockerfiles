@@ -1,10 +1,14 @@
-.PHONY: clean migrate assets confirm
+.PHONY: clean daily migrate assets confirm
 
 clean:
 	docker-compose run --rm web rake mastodon:media:clear
 	docker-compose run --rm web rake mastodon:push:refresh
 	docker-compose run --rm web rake mastodon:push:clear
 	docker-compose run --rm web rake mastodon:feeds:clear
+	docker-compose run --rm web rake mastodon:users:clear
+
+daily:
+	docker-compose run --rm web rake mastodon:daily
 
 migrate:
 	docker-compose run --rm web rails db:migrate
