@@ -1,46 +1,39 @@
-FROM debian:jessie
+FROM alpine:edge
 
 ENV LANG C.UTF-8
-ENV SNAPCASTVERSION 0.11.1
+ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs
 
-RUN apt-get update \
- && apt-get install -y wget \
- && wget -q -O - https://apt.mopidy.com/mopidy.gpg | apt-key add - \
- && wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/jessie.list \
- && apt-get update \
- && apt-get install -y \
-        gir1.2-gst-plugins-base-1.0 \
-        gir1.2-gstreamer-1.0 \
+RUN set -ex \
+ && addgroup -S -g 1000 mopidy \
+ && adduser -S -D -h /var/lib/mopidy -s /sbin/nologin -G mopidy -g mopidy -u 1000 mopidy \
+ && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+ && apk upgrade --no-cache --available \
+ && apk add --no-cache \
+        ca-certificates \
         git \
-        gstreamer1.0-plugins-bad \
-        gstreamer1.0-plugins-good \
-        gstreamer1.0-plugins-ugly \
-        gstreamer1.0-tools \
-        mopidy \
-        mopidy-internetarchive \
-        mopidy-podcast \
-        mopidy-scrobbler \
-        python-pip \
-        supervisor \
- && wget 'https://github.com/badaix/snapcast/releases/download/v'$SNAPCASTVERSION'/snapserver_'$SNAPCASTVERSION'_amd64.deb' \
- && dpkg -i --force-all 'snapserver_'$SNAPCASTVERSION'_amd64.deb' \
- && apt-get -f install -y \
- && rm 'snapserver_'$SNAPCASTVERSION'_amd64.deb' \
- && rm -rf /var/lib/apt/lists/* \
+        gst-plugins-bad1 \
+        gst-plugins-good1 \
+        gst-plugins-ugly1 \
+        py-gst1 \
+        py-pip \
+        python \
+        su-exec \
  && pip install -U pip \
  && pip install \
+        Mopidy-Internetarchive \
         Mopidy-Moped \
         Mopidy-MusicBox-Webclient \
+        Mopidy-Podcast \
+        Mopidy-Scrobbler \
         Mopidy-TuneIn \
         Mopidy-YouTube \
         git+https://github.com/mopidy/mopidy-soundcloud#egg=mopidy-soundcloud \
-        git+https://github.com/xsteadfastx/mopidy-emby#egg=mopidy-emby
-
-COPY root /
+        git+https://github.com/xsteadfastx/mopidy-emby#egg=mopidy-emby \
+        mopidy
 
 VOLUME /var/lib/mopidy/local
 VOLUME /var/lib/mopidy/media
 
-EXPOSE 1704 1705 6680 6600
+EXPOSE 6681 6600
 
-CMD chown mopidy:audio /var/lib/mopidy && chown -R mopidy:audio /var/lib/mopidy/.config && /usr/bin/supervisord -c /etc/supervisord.conf
+CMD set -ex; su-exec mopidy mopidy
