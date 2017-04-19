@@ -6,7 +6,9 @@ ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs
 RUN set -ex \
  && addgroup -S -g 1000 mopidy \
  && adduser -S -D -h /var/lib/mopidy -s /sbin/nologin -G mopidy -g mopidy -u 1000 mopidy \
- && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+ && echo "http://nl.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories \
+ && echo "http://nl.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
+ && echo "http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
  && apk upgrade --no-cache --available \
  && apk add --no-cache \
         ca-certificates \
