@@ -1,6 +1,7 @@
 FROM alpine:edge
 
 ENV LANG C.UTF-8
+ENV PYTHONIOENCODING UTF-8
 ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs
 
 RUN set -ex \
