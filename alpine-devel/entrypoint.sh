@@ -6,6 +6,7 @@ adduser -h /home/marv -H -u $USER_ID -s /bin/sh -D marv
 
 echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 apk update
+apk upgrade --available
 apk add \
     alpine-sdk \
     git-email \
