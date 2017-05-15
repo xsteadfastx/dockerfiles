@@ -1,1 +1,2 @@
 paperless/docker-compose.env
+*.retry

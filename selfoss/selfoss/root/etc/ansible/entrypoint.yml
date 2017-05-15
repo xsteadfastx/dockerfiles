@@ -1,0 +1,49 @@
+---
+- hosts: localhost
+  remote_user: root
+
+  tasks:
+
+    - wait_for:
+        host: db
+        port: 3306
+
+    - mysql_db:
+        login_host: db
+        login_port: 3306
+        login_user: root
+        login_password: "{{ lookup('env', 'MYSQL_ROOT_PASSWORD') }}"
+        name: selfoss
+        encoding: utf8mb4
+        state: present
+        connect_timeout: 30
+
+    - mysql_user:
+        login_user: root
+        login_host: db
+        login_password: "{{ lookup('env', 'MYSQL_ROOT_PASSWORD') }}"
+        name: selfoss
+        password: 537f055
+        host: "%"
+        state: present
+        priv: selfoss.*:ALL
+
+    - file:
+        path: /var/www/selfoss/data/{{ item }}
+        owner: nobody
+        group: nogroup
+        state: directory
+      with_items:
+        - cache
+        - favicons
+        - fulltextrss
+        - logs
+        - sqlite
+        - thumbnails
+
+    - file:
+        path: /var/www/selfoss
+        owner: nobody
+        group: nogroup
+        state: directory
+        recurse: yes
