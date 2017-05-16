@@ -7,7 +7,6 @@ nginx: ## Get nginx services up
 	cd /opt/dockerfiles/emby && docker-compose up -d
 	cd /opt/dockerfiles/gitea && docker-compose up -d
 	cd /opt/dockerfiles/nextcloud && docker-compose up -d
-	cd /opt/dockerfiles/ttrss && docker-compose up -d
 	cd /opt/dockerfiles/wallabag && docker-compose up -d
 	cd /opt/dockerfiles/synapse && docker-compose up -d
 	cd /opt/dockerfiles/mastodon && docker-compose up -d
