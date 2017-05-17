@@ -36,14 +36,14 @@ RUN set -ex \
         echo; \
         echo '; Ensure worker stdout and stderr are sent to the main error log.'; \
         echo 'catch_workers_output = yes'; \
-    } | tee /etc/php7/php-fpm.d/docker.conf \
+    } > /etc/php7/php-fpm.d/docker.conf \
  && { \
         echo '[global]'; \
         echo 'daemonize = no'; \
         echo; \
         echo '[www]'; \
         echo 'listen = [::]:9000'; \
-    } | tee /etc/php7/php-fpm.d/zz-docker.conf \
+    } > /etc/php7/php-fpm.d/zz-docker.conf \
  && mkdir -p /var/www/selfoss \
  && curl -L -o /var/www/selfoss/selfoss.zip https://github.com/SSilence/selfoss/releases/download/$VERSION/selfoss-$VERSION.zip \
  && unzip /var/www/selfoss/selfoss.zip -d /var/www/selfoss \
