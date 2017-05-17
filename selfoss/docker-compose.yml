@@ -16,10 +16,12 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - selfoss:/var/www/selfoss
+      - /opt/selfoss/data:/var/www/selfoss/data
+      - /opt/selfoss/config.ini:/var/www/selfoss/config.ini
     depends_on:
       - app
     ports:
-      - 3001:80
+      - 192.168.39.115:3001:80
     restart: always
 
   db:

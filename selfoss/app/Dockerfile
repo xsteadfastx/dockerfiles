@@ -4,9 +4,10 @@ ARG VERSION=2.17
 
 RUN set -ex \
  && apk upgrade -a --no-cache \
+ && apk add --no-cache --virtual .fetch-deps \
+        curl \
  && apk add --no-cache \
         ansible \
-        curl \
         php7-ctype \
         php7-curl \
         php7-dom \
@@ -47,9 +48,8 @@ RUN set -ex \
  && mkdir -p /var/www/selfoss \
  && curl -L -o /var/www/selfoss/selfoss.zip https://github.com/SSilence/selfoss/releases/download/$VERSION/selfoss-$VERSION.zip \
  && unzip /var/www/selfoss/selfoss.zip -d /var/www/selfoss \
- && rm /var/www/selfoss/selfoss.zip
-
-VOLUME /var/www/selfoss
+ && rm /var/www/selfoss/selfoss.zip \
+ && apk del .fetch-deps
 
 ADD root /
 
