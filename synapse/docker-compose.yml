@@ -5,7 +5,7 @@ services:
     build:
       context: synapse/
       args:
-        - BV_SYN=v0.21.0-rc1
+        - BV_SYN=v0.21.0-rc3
     restart: always
     ports:
       - "8008"
