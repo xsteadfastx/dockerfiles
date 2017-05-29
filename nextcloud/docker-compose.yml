@@ -7,7 +7,7 @@ services:
     volumes:
       - "/srv/www/nextcloud/config:/config"
       - "/srv/www/nextcloud/data:/data"
-      - "/srv/www/nextcloud/data:/apps2"
+      - "/srv/www/nextcloud/apps2:/apps2"
     environment:
       - VIRTUAL_HOST=cloud
     links:

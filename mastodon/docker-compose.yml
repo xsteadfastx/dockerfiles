@@ -27,6 +27,7 @@ services:
     volumes:
       - ./mastodon/public/assets:/mastodon/public/assets
       - ./mastodon/public/system:/mastodon/public/system
+      - ./docker_entrypoint.sh:/usr/local/bin/run
     logging:
       options:
         max-size: 5m
@@ -40,6 +41,8 @@ services:
     depends_on:
       - db
       - redis
+    volumes:
+      - ./docker_entrypoint.sh:/usr/local/bin/run
     logging:
       options:
         max-size: 5m
@@ -53,6 +56,7 @@ services:
       - redis
     volumes:
       - ./mastodon/public/system:/mastodon/public/system
+      - ./docker_entrypoint.sh:/usr/local/bin/run
     logging:
       options:
         max-size: 5m
