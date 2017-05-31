@@ -10,6 +10,7 @@ nginx: ## Get nginx services up
 	cd /opt/dockerfiles/wallabag && docker-compose up --force-recreate -d
 	cd /opt/dockerfiles/synapse && docker-compose up --force-recreate -d
 	cd /opt/dockerfiles/mastodon && docker-compose up --force-recreate -d
+	cd /opt/dockerfiles/selfoss && docker-compose up --force-recreate -d
 	cd /opt/dockerfiles/nginx && docker-compose up --force-recreate -d
 
 irc: ## Get communication services up
