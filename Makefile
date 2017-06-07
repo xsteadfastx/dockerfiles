@@ -1,4 +1,4 @@
-.PHONY: help nginx irc taskd all
+.PHONY: help mopidy nginx irc taskd all
 
 help: ## Show this help
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
