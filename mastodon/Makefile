@@ -1,4 +1,4 @@
-.PHONY: clean daily migrate assets confirm
+.PHONY: clean daily prepare-migrate migrate assets confirm clear-cache
 
 clean:
 	docker-compose run --rm web rake mastodon:media:clear
@@ -10,6 +10,9 @@ clean:
 daily:
 	docker-compose run --rm web rake mastodon:daily
 
+prepare-migrate:
+	docker-compose run --rm web rails mastodon:maintenance:prepare_for_foreign_keys
+
 migrate:
 	docker-compose run --rm web rails db:migrate
 
@@ -18,3 +21,6 @@ assets:
 
 confirm:
 	docker-compose run --rm web rails mastodon:confirm_email USER_EMAIL=$(USER_EMAIL)
+
+clear-cache:
+	docker-compose run --rm web rails r Rails.cache.clear
