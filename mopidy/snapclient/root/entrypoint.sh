@@ -7,7 +7,7 @@ if [ "$1" = "snapclient" ];then
     export PULSE_SERVER=unix:/run/pulse/native
     export PULSE_COOKIE=/tmp/pulse_cookie
     echo "===> start snapclient"
-    gosu snap snapclient -h $SNAPSERVER
+    exec gosu snap snapclient -h $SNAPSERVER
 fi
 
 exec "$@"

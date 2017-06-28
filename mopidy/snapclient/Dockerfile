@@ -1,6 +1,7 @@
 FROM debian:jessie
 
 ENV GOSU_VERSION 1.10
+ENV TINI_VERSION v0.14.0
 ENV USER_ID 1000
 ENV SNAPSERVER localhost
 
@@ -20,9 +21,15 @@ RUN set -ex \
  && export GNUPGHOME="$(mktemp -d)" \
  && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
  && gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
- && rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
  && chmod +x /usr/local/bin/gosu \
  && gosu nobody true \
+ && wget https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini -O /sbin/tini \
+ && wget https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc -O /sbin/tini.asc \
+ && cat /sbin/tini.asc \
+ && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 \
+ && gpg --batch --verify /sbin/tini.asc /sbin/tini \
+ && rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc /sbin/tini.asc \
+ && chmod +x /sbin/tini \
  && wget https://github.com/badaix/snapcast/releases/download/v0.11.1/snapclient_0.11.1_amd64.deb -O /tmp/snapclient.deb \
  && dpkg -i /tmp/snapclient.deb \
  && rm /tmp/snapclient.deb \
@@ -35,5 +42,5 @@ RUN set -ex \
 
 ADD root /
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]
 CMD ["snapclient"]
