@@ -21,6 +21,7 @@ RUN set -ex \
         py-pip \
         python \
         su-exec \
+        tini \
  && pip install -U pip \
  && pip install \
         Mopidy-Internetarchive \
@@ -34,9 +35,12 @@ RUN set -ex \
         git+https://github.com/xsteadfastx/mopidy-emby#egg=mopidy-emby \
         mopidy
 
+ADD root /
+
 VOLUME /var/lib/mopidy/local
 VOLUME /var/lib/mopidy/media
 
 EXPOSE 6681 6600
 
-CMD set -ex; su-exec mopidy mopidy
+ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]
+CMD ["mopidy"]
