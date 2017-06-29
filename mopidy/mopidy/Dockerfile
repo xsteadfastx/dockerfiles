@@ -14,6 +14,7 @@ RUN set -ex \
  && apk add --no-cache \
         ca-certificates \
         git \
+        gst-libav1 \
         gst-plugins-bad1 \
         gst-plugins-good1 \
         gst-plugins-ugly1 \
