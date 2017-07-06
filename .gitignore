@@ -1,2 +1,8 @@
 paperless/docker-compose.env
 *.retry
+.mypy_cache
+*.pyc
+cache
+__pycache__
+*.egg-info
+.tox/
