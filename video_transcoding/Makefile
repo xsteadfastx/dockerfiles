@@ -7,4 +7,4 @@ build:
 	docker build -t video_transcoding .
 
 run:
-	docker run --rm -ti -e USERID=$(USERID) -e GROUPID=$(GROUPID) --device /dev/sr0:/dev/sr0 -v $(HOME):/data video_transcoding
+	docker run --rm -ti -e USERID=$(USERID) -e GROUPID=$(GROUPID) --device /dev/dvd:/dev/dvd -v $(HOME):/data video_transcoding

@@ -1,10 +1,9 @@
-FROM debian:stretch
+FROM ubuntu:xenial
 
 ENV VIDEO_TRANSCODING_VERSION 0.17.3
 
 RUN set -ex \
  && export DEBIAN_FRONTEND=noninteractive \
- && echo "deb http://deb.debian.org/debian stretch contrib" >> /etc/apt/sources.list \
  && apt-get update \
  && apt-get install -y --no-install-recommends \
             curl \
@@ -14,10 +13,12 @@ RUN set -ex \
             gosu \
             handbrake-cli \
             libcdio-utils \
+            mencoder \
             mkvtoolnix \
             mp4v2-utils \
             mpv \
             ruby-full \
+            subtitleripper \
             vobcopy \
             zsh \
  && apt-get install -y libdvd-pkg \
