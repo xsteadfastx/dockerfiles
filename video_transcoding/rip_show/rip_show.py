@@ -19,14 +19,14 @@ def trackstr_to_list_of_int(trackstr: str) -> List[int]:
     return [int(i) for i in trackstr.split(' ')]
 
 
-def get_subtitle_id(language: str, track_info: str) -> Union[int, None]:
+def get_subtitle_id(language: str, track_info: str) -> Union[str, None]:
     search_sid = re.search(
         'subtitle\s\(\ssid\s\):\s(\d)\slanguage:\s{}'.format(language),
         track_info
     )
 
     if search_sid and search_sid.group(1):
-        return int(search_sid.group(1))
+        return search_sid.group(1)
     else:
         return None
 
@@ -125,7 +125,7 @@ def main(language: Tuple[str], keep: bool, temp: str):
                         '-ovc', 'frameno',
                         '-o', '/dev/null',
                         '-slang', lang,
-                        '-sid', str(sid),
+                        '-sid', sid,
                         '-vobsuboutindex', '0',
                         '-vobsuboutid', lang,
                         '-vobsubout', lang
@@ -143,6 +143,12 @@ def main(language: Tuple[str], keep: bool, temp: str):
                         lang
                     ],
                     check=True
+                )
+
+            else:
+                click.secho(
+                    'could not find subtitle language',
+                    fg='red', bg='white'
                 )
 
     # clean it up
