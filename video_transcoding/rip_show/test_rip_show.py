@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 
 import rip_show
@@ -21,3 +23,12 @@ def test_get_subtitle_id(datafile, lang, expected):
         testdata = f.read()
 
     assert rip_show.get_subtitle_id(lang, testdata) == expected
+
+
+@patch('rip_show.listdir')
+def test_get_next_episode_title(mock_listdir):
+    mock_listdir.return_value = ['foo-s01e01.mkv', 'foo-s01e02.mkv']
+
+    assert rip_show.get_next_episode_title(
+        '/foo', 'foo', 1
+    ) == 'foo-s01e03.mkv'
