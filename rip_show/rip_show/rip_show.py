@@ -1,10 +1,10 @@
+import os
+
 import re
 
 import shutil
 
 import subprocess
-
-from os import listdir, makedirs, path
 
 from sys import exit
 
@@ -26,25 +26,12 @@ def trackstr_to_list_of_int(trackstr: str) -> List[int]:
     return [int(i) for i in trackstr.split(' ')]
 
 
-def get_subtitle_id(language: str, track_info: str) -> Union[str, None]:
-    """Searches for subtitle id."""
-    search_sid = re.search(
-        'subtitle\s\(\ssid\s\):\s(\d)\slanguage:\s{}'.format(language),
-        track_info
-    )
-
-    if search_sid and search_sid.group(1):
-        return search_sid.group(1)
-    else:
-        return None
-
-
 def get_next_episode_title(
         directory: str,
         showname: str,
         season: int,
 ) -> Union[str, None]:
-    episodes = sorted(listdir(directory))
+    episodes = sorted(os.listdir(directory))
 
     if not episodes:
         return '{}-s{:02d}e01.mkv'.format(showname, season)
@@ -56,6 +43,27 @@ def get_next_episode_title(
         next_ep = int(match_last_ep.group(1)) + 1
 
         return '{}-s{:02d}e{:02d}.mkv'.format(showname, season, next_ep)
+
+    else:
+        return None
+
+
+def split_position(item_list: List[str], value: str) -> Union[int, None]:
+    for idx, val in enumerate(item_list):
+        if val == value:
+            return idx + 1
+    return None
+
+
+def local_dest_to_docker_dest(destination: str) -> Union[str, None]:
+    username = os.getenv('HOSTUSER')
+    splitted_destination = destination.split(os.sep)
+    split_pos = split_position(splitted_destination, username)
+
+    if split_pos and isinstance(split_pos, int):
+        components = splitted_destination[split_pos:]
+
+        return os.path.join('/data', '/'.join(components))
 
     else:
         return None
@@ -91,12 +99,18 @@ def get_next_episode_title(
     prompt=True,
     help='Season name.',
 )
+@click.option(
+    '--destination', '-d',
+    prompt=True,
+    help='Destination full path.'
+)
 def main(
         language: Tuple[str],
         keep: bool,
         temp: str,
         showname: str,
-        season: int
+        season: int,
+        destination: str,
 ) -> None:
     # set temp directoy for dvd rip
     if not temp:
@@ -105,18 +119,18 @@ def main(
         tmpdir = temp
 
     # create destination directories
-    if not path.exists(showname):
+    if not os.path.exists(showname):
         click.secho('---> create show directory', fg='black', bg='white')
-        makedirs(showname)
+        os.makedirs(showname)
 
-    destination = path.join(showname, 'Season {:02d}'.format(season))
+    final_destination = os.path.join(showname, 'Season {:02d}'.format(season))
 
-    if not path.exists(destination):
+    if not os.path.exists(final_destination):
         click.secho('---> create season directory', fg='black', bg='white')
-        makedirs(destination)
+        os.makedirs(final_destination)
 
     # copy dvd to harddrive
-    if not path.exists(path.join(tmpdir, 'DVD')):
+    if not os.path.exists(os.path.join(tmpdir, 'DVD')):
 
         click.secho('---> ripping dvd', fg='black', bg='white')
         subprocess.run(
@@ -159,9 +173,10 @@ def main(
             '--title', str(track),
             '--crop', 'detect',
             '--main-audio={}'.format(language[0]),
-        ]
+        ]  # type: List[str]
 
         if len(language) >= 1:
+
             for lang in language[1:]:
                 video_rip_cmd.append('--add-audio={}'.format(lang))
 
@@ -169,29 +184,35 @@ def main(
         video_rip_cmd.append('--add-subtitle={}'.format(','.join(language)))
 
         # getting outputname
-        outputname = get_next_episode_title(destination, showname, season)
-        if not outputname:
+        outputname = get_next_episode_title(
+            final_destination,
+            showname, season
+        )
+
+        if outputname and isinstance(outputname, str):
+
+            video_rip_cmd.extend(
+                [
+                    '-o',
+                    outputname
+                ]
+            )
+
+            # append directory with ripped dvd image
+            video_rip_cmd.append('DVD')
+
+            # run this thing
+            subprocess.run(
+                video_rip_cmd,
+                cwd=tmpdir,
+                check=True
+            )
+
+            # move file to destination directory
+            shutil.move(os.path.join(tmpdir, outputname), final_destination)
+
+        else:
             exit(1)
-
-        video_rip_cmd.extend(
-            [
-                '-o',
-                outputname
-            ]
-        )
-
-        # append directory with ripped dvd image
-        video_rip_cmd.append('DVD')
-
-        # run this thing
-        subprocess.run(
-            video_rip_cmd,
-            cwd=tmpdir,
-            check=True
-        )
-
-        # move file to destination directory
-        shutil.move(path.join(tmpdir, outputname), destination)
 
     # clean it up
     if not keep:

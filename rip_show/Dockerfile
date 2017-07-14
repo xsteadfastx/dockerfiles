@@ -1,5 +1,6 @@
 FROM debian:stretch
 
+ENV LANG C.UTF-8
 ENV VIDEO_TRANSCODING_VERSION 0.17.3
 
 RUN set -ex \
@@ -49,9 +50,6 @@ RUN set -ex \
 
 COPY rip_show /tmp/rip_show
 
-# RREEEMMMOOVVVEEEEE
-ENV LANG C.UTF-8
-
 RUN set -ex \
  && curl https://bootstrap.pypa.io/get-pip.py | python3 \
  && pip3 install /tmp/rip_show \
@@ -60,4 +58,4 @@ RUN set -ex \
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["video_transcoding"]
+CMD ["rip_show"]

@@ -2,7 +2,7 @@
 
 set -e
 
-if [ "$1" = "video_transcoding" ];then
+if [ "$1" = "rip_show" ];then
         echo "---> adding user"
         groupadd -g $GROUPID trans
         useradd -g $GROUPID -u $USERID -s /bin/zsh -m -G cdrom trans
