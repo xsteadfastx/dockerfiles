@@ -24,12 +24,12 @@ services:
     volumes:
       - "/opt/synapse_db:/var/lib/postgresql/data"
 
-  matrix-ircd:
-    build:
-      context: matrix-ircd/
-    ports:
-      - "5999:5999"
-    command: gosu matrix cargo run -- --url https://matrix.xsteadfastx.org --bind 0.0.0.0:5999
+  # matrix-ircd:
+  #  build:
+  #    context: matrix-ircd/
+  #  ports:
+  #    - "5999:5999"
+  #  command: gosu matrix cargo run -- --url https://matrix.xsteadfastx.org --bind 0.0.0.0:5999
 
 networks:
   default:
