@@ -2,7 +2,8 @@ FROM debian:jessie
 
 ENV GOSU_VERSION 1.9
 
-RUN apt-get update \
+RUN set -ex \
+ && apt-get update \
  && apt-get install -y --no-install-recommends \
         ca-certificates \
         wget \

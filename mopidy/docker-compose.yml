@@ -30,3 +30,13 @@ services:
     logging:
       options:
         max-size: 5m
+
+  upmpdcli:
+    build:
+      context: upmpdcli/
+    command: gosu nobody upmpdcli -h 192.168.39.115
+    restart: on-failure:10
+    logging:
+      options:
+        max-size: 5m
+    network_mode: "host"

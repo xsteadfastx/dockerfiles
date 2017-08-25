@@ -14,11 +14,11 @@ RUN set -ex \
  && apk add --no-cache \
         ca-certificates \
         git \
-        gst-libav1 \
-        gst-plugins-bad1 \
-        gst-plugins-good1 \
-        gst-plugins-ugly1 \
-        py-gst1 \
+        gst-libav \
+        gst-plugins-bad \
+        gst-plugins-good \
+        gst-plugins-ugly \
+        py-gst \
         py-pip \
         python \
         su-exec \
