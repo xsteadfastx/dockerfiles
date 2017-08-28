@@ -1,7 +1,9 @@
 #!/bin/sh
 
+set -e
+
 if [ "$1" = "upmpdcli" ];then
-        gosu upmpdcli upmpdcli
+        exec su-exec upmpdcli upmpdcli
 fi
 
 exec "$@"
