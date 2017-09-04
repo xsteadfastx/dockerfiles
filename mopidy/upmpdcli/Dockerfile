@@ -10,7 +10,4 @@ RUN set -ex \
  && addgroup -S upmpdcli \
  && adduser -h /var/lib/upmpdcli -S -D -G upmpdcli upmpdcli
 
-COPY root /
-
-ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]
-CMD ["upmpdcli"]
+ENTRYPOINT ["/sbin/tini", "--", "su-exec", "upmpdcli", "upmpdcli"]

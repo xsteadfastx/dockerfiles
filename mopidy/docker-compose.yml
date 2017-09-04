@@ -34,7 +34,7 @@ services:
   upmpdcli:
     build:
       context: upmpdcli/
-    command: su-exec upmpdcli upmpdcli -h 192.168.39.115
+    command: -h 192.168.39.115
     restart: on-failure:10
     logging:
       options:
