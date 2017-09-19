@@ -2,7 +2,7 @@
 
 set -ex
 
-adduser -h /home/marv -H -u $USER_ID -s /bin/sh -D marv
+adduser -h /home/marv -H -u "$USER_ID" -s /bin/sh -D marv
 
 echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 apk update
@@ -27,5 +27,7 @@ su marv -c "
         git config --global sendemail.smtpencryption tls && \
         git config --global sendemail.smtpuser xsteadfastx@gmail.com
 "
+
+rm -rf /home/marv/packages
 
 exec su marv -c /bin/sh
