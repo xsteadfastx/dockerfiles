@@ -10,7 +10,6 @@ RUN set -ex \
 
 COPY mime.types /etc/mime.types
 COPY icecast.xml /etc/icecast/icecast.xml
-COPY silence.ogg /usr/share/icecast/web/silence.ogg
 
 ENTRYPOINT ["/sbin/tini", "--"]
 

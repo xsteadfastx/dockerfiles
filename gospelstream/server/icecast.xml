@@ -27,9 +27,4 @@
     <http-headers>
         <header name="Access-Control-Allow-Origin" value="*" />
     </http-headers>
-    <mount>
-        <mount-name>/mopidy.ogg</mount-name>
-        <fallback-mount>/silence.ogg</fallback-mount>
-        <fallback-override>1</fallback-override>
-    </mount>
 </icecast>

@@ -3,9 +3,13 @@ services:
   server:
     build:
       context: server/
+    ports:
+      - "8000:8000"
   streamer:
     build:
       context: streamer/
     devices:
       - "/dev/snd:/dev/snd"
+    depends_on:
+      - server
 
