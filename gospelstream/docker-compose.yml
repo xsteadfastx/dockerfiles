@@ -1,0 +1,21 @@
+version : '3'
+services:
+  server:
+    build:
+      context: server/
+    ports:
+      - "8000:8000"
+  streamer:
+    build:
+      context: streamer/
+    devices:
+      - "/dev/snd:/dev/snd"
+    depends_on:
+      - server
+    environment:
+      - USER_ID=1000
+      - GROUP_ID=1000
+    volumes:
+      - "/run/user/1000/pulse:/run/pulse"
+      - "${HOME}/.config/pulse/cookie:/tmp/pulse_cookie"
+      - "./archive:/archive"
