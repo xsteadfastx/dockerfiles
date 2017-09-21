@@ -40,3 +40,13 @@ services:
       options:
         max-size: 5m
     network_mode: "host"
+
+  #icecast:
+  #  build:
+  #    context: icecast/
+  #  ports:
+  #    - "8000:8000"
+  #  logging:
+  #    options:
+  #      max-size: 5m
+

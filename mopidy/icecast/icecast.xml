@@ -1,0 +1,36 @@
+<icecast>
+    <limits>
+        <sources>2</sources>
+        <burst-size>0</burst-size>
+    </limits>
+    <authentication>
+        <source-password>hackme</source-password>
+        <relay-password>hackme</relay-password>
+        <admin-user>admin</admin-user>
+        <admin-password>hackme</admin-password>
+    </authentication>
+    <hostname>localhost</hostname>
+    <listen-socket>
+        <port>8000</port>
+    </listen-socket>
+    <fileserve>1</fileserve>
+    <paths>
+        <logdir>/var/log/icecast</logdir>
+        <webroot>/usr/share/icecast/web</webroot>
+        <adminroot>/usr/share/icecast/admin</adminroot>
+        <alias source="/" destination="/status.xsl"/>
+    </paths>
+    <logging>
+        <accesslog>-</accesslog>
+        <errorlog>-</errorlog>
+        <loglevel>3</loglevel> <!-- 4 Debug, 3 Info, 2 Warn, 1 Error -->
+    </logging>
+    <http-headers>
+        <header name="Access-Control-Allow-Origin" value="*" />
+    </http-headers>
+    <mount>
+    <mount-name>/mopidy</mount-name>
+        <fallback-mount>/silence.mp3</fallback-mount>
+        <fallback-override>1</fallback-override>
+    </mount>
+</icecast>
