@@ -7,4 +7,4 @@ run:
 	docker-compose up --force-recreate
 
 down:
-	docker-compose down
+	docker-compose down -v --remove-orphans

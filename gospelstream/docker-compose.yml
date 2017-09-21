@@ -12,4 +12,5 @@ services:
       - "/dev/snd:/dev/snd"
     depends_on:
       - server
-
+    volumes:
+      - "./archive:/archive"
