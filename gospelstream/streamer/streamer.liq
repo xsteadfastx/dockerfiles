@@ -1,4 +1,5 @@
 #!/usr/bin/liquidsoap -v
+# vim: softtabstop=4 shiftwidth=4 expandtab
 
 set("log.stdout", true)
 
@@ -7,10 +8,19 @@ set("log.stdout", true)
 url = "http://st02.dlf.de/dlf/02/64/mp3/stream.mp3"
 dlfkultur = mksafe(input.http(url))
 
-output.icecast(%opus(channels=1, bitrate="auto"),
- host="server",
- port=8000,
- password="hackme",
- mount="/dlfkultur.ogg",
- user="source",
- dlfkultur)
+output.icecast(
+    %opus(channels=1, bitrate="auto"),
+    host="server",
+    port=8000,
+    password="hackme",
+    mount="/dlfkultur.ogg",
+    user="source",
+    dlfkultur
+)
+
+output.file(
+    %opus(channels=1, bitrate="auto"),
+    "/archive/%Y-%m-%d/%Y-%m-%d-%H_%M_%S.opus",
+    #reopen_when={0m0s},
+    dlfkultur
+)
