@@ -11,11 +11,9 @@ RUN set -ex \
       bitlbee-facebook@testing \
       bitlbee-otr \
       su-exec \
-      tini
-
-RUN adduser -h /var/lib/bitlbee -H -s /sbin/nologin -D bitlbee
-
-RUN mkdir /var/run/bitlbee \
+      tini \
+ && adduser -h /var/lib/bitlbee -H -s /sbin/nologin -D bitlbee \
+ && mkdir -p /var/run/bitlbee \
  && chown bitlbee:bitlbee /var/run/bitlbee
 
 VOLUME /data
