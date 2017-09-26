@@ -12,7 +12,10 @@ services:
       - "/dev/snd:/dev/snd"
     depends_on:
       - server
+    environment:
+      - USER_ID=1000
+      - GROUP_ID=1000
     volumes:
       - "/run/user/1000/pulse:/run/pulse"
-      - "/home/mpreuss/.config/pulse/cookie:/tmp/pulse_cookie"
+      - "${HOME}/.config/pulse/cookie:/tmp/pulse_cookie"
       - "./archive:/archive"
