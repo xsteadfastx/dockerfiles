@@ -30,9 +30,16 @@ RUN set -ex \
         liquidsoap \
         liquidsoap-plugin-alsa \
         liquidsoap-plugin-opus \
+        liquidsoap-plugin-pulseaudio \
+        pulseaudio \
+        pulseaudio-utils \
  && rm -rf /var/lib/apt/lists/* \
+ && usermod -u 1000 liquidsoap \
+ && usermod -G audio -a liquidsoap \
  && mkdir -p /opt/streamer \
- && usermod -G audio -a liquidsoap
+ && mkdir -p /var/log/liquidsoap \
+ && chown -R liquidsoap /var/log/liquidsoap \
+ && chown -R liquidsoap /usr/share/liquidsoap
 
 COPY streamer.liq /opt/streamer/streamer.liq
 

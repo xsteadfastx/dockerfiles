@@ -13,4 +13,6 @@ services:
     depends_on:
       - server
     volumes:
+      - "/run/user/1000/pulse:/run/pulse"
+      - "/home/mpreuss/.config/pulse/cookie:/tmp/pulse_cookie"
       - "./archive:/archive"
