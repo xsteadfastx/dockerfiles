@@ -6,3 +6,4 @@ cache
 __pycache__
 *.egg-info
 .tox/
+mastodon/mastodon
