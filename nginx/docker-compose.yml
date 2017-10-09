@@ -1,5 +1,6 @@
-version: '2'
+version: '3'
 services:
+
   nginx:
     image: nginx
     ports:
@@ -11,11 +12,13 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
       - /var/log/nginx:/var/log/nginx
       - /opt/synapse:/opt/synapse
-  gen:
-    image: jwilder/docker-gen
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - /opt/dockerfiles/nginx:/data
-    volumes_from:
-      - nginx
-    command: -notify-sighup nginx_nginx_1 -watch -only-exposed /data/nginx.tmpl /etc/nginx/upstream.conf
+    restart: on-failure
+    networks:
+      - nginx_backend
+      - nginx_frontend
+
+networks:
+  nginx_frontend:
+  nginx_backend:
+    external: true
+

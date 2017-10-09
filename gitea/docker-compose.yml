@@ -1,16 +1,14 @@
-version: '2'
+version: '3'
 services:
   gitea:
     image: gitea/gitea
     ports:
-      - "3000"
+      - 3000
     volumes:
       - "/srv/www/gitea:/data"
-    environment:
-      - VIRTUAL_HOST=gitea
-      - VIRTUAL_PORT=3000
+    networks:
+      - nginx_backend
 
 networks:
-  default:
-    external:
-      name: nginx_default
+  nginx_backend:
+    external: true

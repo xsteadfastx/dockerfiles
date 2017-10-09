@@ -1,17 +1,18 @@
-version: '2'
+version: '3'
 services:
+
   wallabag:
     build:
       context: wallabag/
-    environment:
-      - VIRTUAL_HOST=wallabag
     env_file:
       - env.mariadb
+    environment:
+      - VIRTUAL_HOST=wallabag
     ports:
-      - "80"
+      - 80
     networks:
-      - back
-      - front
+      - wallabag_backend
+      - nginx_backend
 
   wallabag_data:
     image: mariadb
@@ -20,10 +21,9 @@ services:
     volumes:
       - /srv/www/wallabag:/var/lib/mysql
     networks:
-      - back
+      - wallabag_backend
 
 networks:
-  back:
-  front:
-    external:
-      name: nginx_default
+  wallabag_backend:
+  nginx_backend:
+    external: true

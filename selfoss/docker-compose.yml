@@ -10,8 +10,10 @@ services:
       - /opt/selfoss/config.ini:/var/www/selfoss/config.ini
     env_file:
       - /opt/selfoss/selfoss.env
+    networks:
+      - selfoss_backend
 
-  nginx:
+  selfoss:
     image: nginx:alpine
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
@@ -21,7 +23,10 @@ services:
     depends_on:
       - app
     ports:
-      - 192.168.39.115:3001:80
+      - 80
+    networks:
+      - selfoss_backend
+      - nginx_backend
     restart: always
 
   db:
@@ -30,7 +35,13 @@ services:
       - /opt/selfoss/db:/var/lib/mysql
     env_file:
       - /opt/selfoss/selfoss.env
-
+    networks:
+      - selfoss_backend
 
 volumes:
   selfoss:
+
+networks:
+  selfoss_backend:
+  nginx_backend:
+    external: true

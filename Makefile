@@ -4,6 +4,7 @@ help: ## Show this help
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 nginx: ## Get nginx services up
+	@docker network inspect nginx_backend >/dev/null 2>&1 || docker network create nginx_backend
 	cd /opt/dockerfiles/emby && docker-compose up --force-recreate -d
 	cd /opt/dockerfiles/gitea && docker-compose up --force-recreate -d
 	cd /opt/dockerfiles/nextcloud && docker-compose up --force-recreate -d

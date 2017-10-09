@@ -8,21 +8,23 @@ services:
         - BV_SYN=v0.23.1
     restart: always
     ports:
-      - "8008"
+      - 8008
     volumes:
       - "/opt/synapse:/data"
     command: start
-    environment:
-      - VIRTUAL_HOST=synapse
-      - VIRTUAL_PORT=8008
     logging:
       options:
         max-size: 5m
+    networks:
+      - nginx_backend
+      - synapse_backend
 
   synapse_data:
     image: postgres:alpine
     volumes:
       - "/opt/synapse_db:/var/lib/postgresql/data"
+    networks:
+      - synapse_backend
 
   # matrix-ircd:
   #  build:
@@ -32,6 +34,6 @@ services:
   #  command: gosu matrix cargo run -- --url https://matrix.xsteadfastx.org --bind 0.0.0.0:5999
 
 networks:
-  default:
-    external:
-      name: nginx_default
+  nginx_backend:
+    external: true
+  synapse_backend:
