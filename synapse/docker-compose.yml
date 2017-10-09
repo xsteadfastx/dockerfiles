@@ -7,8 +7,6 @@ services:
       args:
         - BV_SYN=v0.23.1
     restart: always
-    ports:
-      - 8008
     volumes:
       - "/opt/synapse:/data"
     command: start

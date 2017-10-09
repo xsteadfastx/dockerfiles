@@ -16,8 +16,6 @@ services:
     networks:
       - nextcloud_backend
       - nginx_backend
-    ports:
-      - 80
 
   app:
     image: nextcloud:fpm
@@ -32,8 +30,6 @@ services:
 
   redis:
     image: redis:alpine
-    ports:
-      - 6379
     networks:
       - nextcloud_backend
 

@@ -22,8 +22,6 @@ services:
       - /opt/selfoss/config.ini:/var/www/selfoss/config.ini
     depends_on:
       - app
-    ports:
-      - 80
     networks:
       - selfoss_backend
       - nginx_backend

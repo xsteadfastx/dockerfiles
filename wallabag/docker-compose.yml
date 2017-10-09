@@ -8,8 +8,6 @@ services:
       - env.mariadb
     environment:
       - VIRTUAL_HOST=wallabag
-    ports:
-      - 80
     networks:
       - wallabag_backend
       - nginx_backend

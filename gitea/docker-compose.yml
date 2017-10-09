@@ -2,8 +2,6 @@ version: '3'
 services:
   gitea:
     image: gitea/gitea
-    ports:
-      - 3000
     volumes:
       - "/srv/www/gitea:/data"
     networks:
