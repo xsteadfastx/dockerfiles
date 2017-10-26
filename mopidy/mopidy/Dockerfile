@@ -10,6 +10,7 @@ RUN set -ex \
  && echo "http://nl.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories \
  && echo "http://nl.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
  && echo "http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+ && apk add -u busybox --no-cache \
  && apk upgrade --no-cache --available \
  && apk add --no-cache \
         ca-certificates \
@@ -26,6 +27,8 @@ RUN set -ex \
  && pip install -U pip \
  && pip install \
         Mopidy-Internetarchive \
+        Mopidy-Local-Images \
+        Mopidy-Local-SQLite \
         Mopidy-Moped \
         Mopidy-MusicBox-Webclient \
         Mopidy-Podcast \
@@ -44,4 +47,4 @@ VOLUME /var/lib/mopidy/media
 EXPOSE 6681 6600
 
 ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]
-CMD ["mopidy"]
+CMD ["start"]
