@@ -1,15 +1,27 @@
-version: '3'
+version: '3.4'
 
 services:
-  mayanedms:
-    build:
-      context: mayanedms/
+
+  app:
+    image: mayanedms/mayanedms
     ports:
       - "81:80"
     volumes:
-      - mayan_media:/var/lib/mayan
-      - mayan_settings:/etc/mayan
+      - type: volume
+        source: mayan_settings
+        target: /etc/mayan
+      - type: bind
+        source: /opt/mayan/files
+        target: /var/lib/mayan
+    env_file: /opt/mayan/.env
+
+  db:
+    image: postgres:alpine
+    volumes:
+      - type: bind
+        source: /opt/mayan/db
+        target: /var/lib/postgresql/data
+    env_file: /opt/mayan/.env
 
 volumes:
-  mayan_media:
   mayan_settings:
