@@ -7,10 +7,6 @@ services:
     volumes:
       - "/opt/bitlbee/data/bitlbee:/etc/bitlbee"
       - "/opt/bitlbee/data/users:/var/lib/bitlbee"
-    ports:
-      - "127.0.0.1:6667:6667"
-    external_links:
-      - prosody_prosody_1:prosody
     logging:
       options:
         max-size: 5m
