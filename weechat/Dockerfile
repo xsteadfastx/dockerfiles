@@ -7,6 +7,8 @@ RUN set -ex \
  && apk add -U --no-cache busybox \
  && apk upgrade -a --no-cache \
  && apk add --no-cache \
+        lua \
+        lua-cjson \
         python \
         su-exec \
         weechat \
@@ -16,5 +18,7 @@ RUN set -ex \
         weechat-ruby \
  && addgroup -g $GROUP_ID weechat \
  && adduser -u $USER_ID -G weechat -D weechat
+
+EXPOSE 8002
 
 CMD ["su-exec", "weechat", "weechat"]
