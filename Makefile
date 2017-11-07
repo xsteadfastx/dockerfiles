@@ -14,6 +14,7 @@ nginx: ## Get nginx services up
 	cd /opt/dockerfiles/nginx && docker-compose up --force-recreate -d
 
 irc: ## Get communication services up
+	@docker network inspect communication_backend >/dev/null 2>&1 || docker network create communication_backend
 	cd /opt/dockerfiles/prosody && docker-compose up --force-recreate -d
 	cd /opt/dockerfiles/bitlbee && docker-compose up --force-recreate -d
 	cd /opt/dockerfiles/synapse && docker-compose up --force-recreate -d

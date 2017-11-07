@@ -10,8 +10,8 @@ services:
     logging:
       options:
         max-size: 5m
-
+    networks:
+      - communication_backend
 networks:
-  default:
-    external:
-      name: prosody_default
+  communication_backend:
+    external: true

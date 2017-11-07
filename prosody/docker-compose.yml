@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   prosody:
     image: prosody/prosody:0.9.9
@@ -10,3 +10,10 @@ services:
     ports:
       - 5222:5222
       - 5269:5269
+    networks:
+      - prosody_frontend
+      - communication_backend
+networks:
+  prosody_frontend:
+  communication_backend:
+    external: true
