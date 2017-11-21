@@ -12,6 +12,7 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
       - /var/log/nginx:/var/log/nginx
       - /opt/synapse:/opt/synapse
+      - /srv/www/letsencrypt:/srv/www/letsencrypt
     restart: on-failure
     networks:
       - nginx_backend
