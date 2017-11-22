@@ -2,6 +2,8 @@ FROM alpine:edge
 
 ENV USER_ID 1000
 ENV GROUP_ID 1000
+ENV LANG C.UTF-8
+ENV TERM screen-256color
 
 RUN set -ex \
  && apk add -U --no-cache busybox \
