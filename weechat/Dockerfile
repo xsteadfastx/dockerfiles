@@ -11,6 +11,7 @@ RUN set -ex \
  && apk add --no-cache \
         lua \
         lua-cjson \
+        openssh-client \
         python \
         su-exec \
         weechat \
