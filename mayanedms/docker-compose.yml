@@ -14,6 +14,8 @@ services:
         source: /opt/mayan/files
         target: /var/lib/mayan
     env_file: /opt/mayan/.env
+    depends_on:
+      - db
 
   db:
     image: postgres:alpine
