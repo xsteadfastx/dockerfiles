@@ -1,7 +1,8 @@
 version: '3'
 services:
   prosody:
-    image: prosody/prosody:0.10
+    build:
+      context: prosody/
     volumes:
       - /opt/prosody/config:/etc/prosody
       - /opt/prosody/data:/var/lib/prosody
