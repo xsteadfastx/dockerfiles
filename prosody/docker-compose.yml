@@ -5,6 +5,7 @@ services:
       context: prosody/
     volumes:
       - /opt/prosody/config:/etc/prosody
+      - /home/marv/.getssl/xsteadfastx.org:/etc/prosody/letsencrypt
       - /opt/prosody/data:/var/lib/prosody
       - /opt/prosody/logs:/var/log/prosody
       - /opt/prosody/modules:/usr/lib/prosody-modules
