@@ -1,18 +1,4 @@
-FROM debian:stretch-slim
-
-ENV py21=2.1.3 \
-    py22=2.2.3 \
-    py23=2.3.7 \
-    py24=2.4.6 \
-    py25=2.5.6 \
-    py26=2.6.9 \
-    py27=2.7.14 \
-    py33=3.3.7 \
-    py34=3.4.7 \
-    py35=3.5.4 \
-    py36=3.6.4 \
-    pypy27=pypy2.7-5.9.0 \
-    pypy35=pypy3.5-5.9.0
+FROM ubuntu:xenial
 
 ENV LANG C.UTF-8
 ENV HOME /root
@@ -21,24 +7,42 @@ ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 RUN set -ex \
  && buildDeps='\
-        build-essential \
-        curl \
         git \
+        make \
+        build-essential \
+        libssl-dev \
+        zlib1g-dev \
         libbz2-dev \
-        libncurses5-dev \
-        libncursesw5-dev \
         libreadline-dev \
         libsqlite3-dev \
-        libssl1.0-dev \
-        llvm \
-        make \
         wget \
+        curl \
+        llvm \
+        libncurses5-dev \
         xz-utils \
-        zlib1g-dev' \
+        tk-dev' \
  && apt-get update \
  && apt-get install -y $buildDeps \
- && apt-get install -y \
- && rm -rf /var/lib/apt/lists/* \
+ && rm -rf /var/lib/apt/lists/*
+
+ENV py21=2.1.3 \
+    py22=2.2.3 \
+    py23=2.3.7 \
+    py24=2.4.6 \
+    py25=2.5.6 \
+    py26=2.6.9 \
+    py27=2.7.14 \
+    py30=3.0.1 \
+    py31=3.1.5 \
+    py32=3.2.6 \
+    py33=3.3.7 \
+    py34=3.4.7 \
+    py35=3.5.4 \
+    py36=3.6.4 \
+    pypy27=pypy2.7-5.9.0 \
+    pypy35=pypy3.5-5.9.0
+
+ RUN set -ex \
  && git clone https://github.com/yyuu/pyenv.git ~/.pyenv \
  &&  ~/.pyenv/bin/pyenv install $py21 \
  &&  ~/.pyenv/bin/pyenv install $py22 \
@@ -47,6 +51,9 @@ RUN set -ex \
  &&  ~/.pyenv/bin/pyenv install $py25 \
  &&  ~/.pyenv/bin/pyenv install $py26 \
  &&  ~/.pyenv/bin/pyenv install $py27 \
+ &&  ~/.pyenv/bin/pyenv install $py30 \
+ &&  ~/.pyenv/bin/pyenv install $py31 \
+ &&  ~/.pyenv/bin/pyenv install $py32 \
  &&  ~/.pyenv/bin/pyenv install $py33 \
  &&  ~/.pyenv/bin/pyenv install $py34 \
  &&  ~/.pyenv/bin/pyenv install $py35 \
@@ -58,6 +65,9 @@ RUN set -ex \
         $py35 \
         $py34 \
         $py33 \
+        $py32 \
+        $py31 \
+        $py30 \
         $py27 \
         $py26 \
         $py25 \
