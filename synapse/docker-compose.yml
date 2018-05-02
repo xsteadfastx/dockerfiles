@@ -5,7 +5,7 @@ services:
     build:
       context: synapse/
       args:
-        - BV_SYN=v0.27.3
+        - BV_SYN=v0.28.1
     restart: always
     volumes:
       - "/opt/synapse:/data"
