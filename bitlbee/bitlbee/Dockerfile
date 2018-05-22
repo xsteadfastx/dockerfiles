@@ -1,24 +1,39 @@
-FROM alpine:edge
+FROM ubuntu:bionic
 MAINTAINER Marvin Steadfast <marvin@xsteadfastx.org>
+
+ENV TINI_VERSION v0.18.0
 
 COPY root /
 
 RUN set -ex \
- && apk upgrade -a --no-cache \
- && echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
- && apk add --no-cache \
-      bitlbee \
-      bitlbee-facebook@testing \
-      bitlbee-otr \
-      su-exec \
-      tini \
- && adduser -h /var/lib/bitlbee -H -s /sbin/nologin -D bitlbee \
- && mkdir -p /var/run/bitlbee \
- && chown bitlbee:bitlbee /var/run/bitlbee
+ && apt-get update \
+ && apt-get install -y \
+      bitlbee-libpurple \
+      bitlbee-plugin-facebook \
+      bitlbee-plugin-otr \
+      curl \
+      gosu \
+      gpg \
+      purple-matrix \
+ && rm -rf /var/lib/apt/lists/* \
+ && curl -L https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini -o /tini \
+ && curl -L https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc -o /tini.asc \
+ && chmod +x /tini \
+ && export GNUPGHOME="$(mktemp -d)" \
+ && \
+    for server in $(shuf -e ha.pool.sks-keyservers.net \
+        hkp://p80.pool.sks-keyservers.net:80 \
+        keyserver.ubuntu.com \
+        hkp://keyserver.ubuntu.com:80 \
+        pgp.mit.edu) ; do \
+        gpg --keyserver "$server" --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 && break || : ; \
+    done \
+ && gpg --verify /tini.asc \
+ && mkdir -p /var/run/bitlbee
 
 VOLUME /data
 
 EXPOSE 6667
 
-ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]
+ENTRYPOINT ["/tini", "--", "/entrypoint.sh"]
 CMD ["bitlbee"]
