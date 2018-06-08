@@ -1,0 +1,13 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks.git
+    rev: v1.3.0
+    hooks:
+      - id: check-yaml
+#  - repo: https://github.com/Lucas-C/pre-commit-hooks-nodejs.git
+#    rev: v1.1.0
+#    hooks:
+#      - id: dockerfile_lint
+  - repo: https://github.com/IamTheFij/docker-pre-commit.git
+    rev: v1.0.0
+    hooks:
+      - id: docker-compose-check
