@@ -1,5 +1,8 @@
 FROM jenkins
 
+LABEL name=jenkins \
+      version="0.0.0"
+
 # docker group id of the host docker group
 ENV DOCKER_GID 132
 

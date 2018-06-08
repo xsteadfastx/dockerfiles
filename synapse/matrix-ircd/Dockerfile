@@ -1,5 +1,8 @@
 FROM debian:jessie
 
+LABEL name=matrix-ircd \
+      version="0.0.0"
+
 ARG RUST_VERSION=nightly
 ARG GOSU_VERSION=1.9
 

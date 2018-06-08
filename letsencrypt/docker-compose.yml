@@ -1,3 +1,4 @@
+---
 letsencrypt:
   build: letsencrypt/
   volumes:
@@ -6,5 +7,8 @@ letsencrypt:
   environment:
     EMAIL: marvin@xsteadfastx.org
     WEBROOTPATH: /etc/letsencrypt/webrootauth
-  command:
-    "-d emby.xsteadfastx.org -d cloud.xsteadfastx.org -d reader.xsteadfastx.org -d git.xsteadfastx.org"
+  command: >
+    -d emby.xsteadfastx.org
+    -d cloud.xsteadfastx.org
+    -d reader.xsteadfastx.org
+    -d git.xsteadfastx.org"

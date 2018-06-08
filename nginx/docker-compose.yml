@@ -1,3 +1,4 @@
+---
 version: '3'
 services:
 
@@ -22,4 +23,3 @@ networks:
   nginx_frontend:
   nginx_backend:
     external: true
-

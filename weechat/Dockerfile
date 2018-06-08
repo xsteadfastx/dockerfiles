@@ -1,5 +1,8 @@
 FROM alpine:edge
 
+LABEL name=weechat \
+      version="0.0.0"
+
 ENV USER_ID 1000
 ENV GROUP_ID 1000
 ENV LANG C.UTF-8

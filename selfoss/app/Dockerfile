@@ -1,5 +1,8 @@
 FROM alpine:edge
 
+LABEL name=selfoss \
+      version="0.0.0"
+
 ARG VERSION=2.17
 
 RUN set -ex \

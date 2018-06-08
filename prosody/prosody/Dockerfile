@@ -1,5 +1,8 @@
 FROM alpine:edge
 
+LABEL name=prosody
+      version="0.0.0"
+
 RUN set -ex \
  && apk upgrade -a --no-cache \
  && apk add --no-cache \

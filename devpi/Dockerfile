@@ -1,5 +1,8 @@
 FROM alpine:3.2
 
+LABEL name="devpi" \
+      version="0.0.0"
+
 ADD https://github.com/tianon/gosu/releases/download/1.6/gosu-amd64 /usr/sbin/gosu
 ADD https://bootstrap.pypa.io/get-pip.py get-pip.py
 RUN apk add --update \

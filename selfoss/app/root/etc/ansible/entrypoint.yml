@@ -46,4 +46,4 @@
         owner: nobody
         group: nogroup
         state: directory
-        recurse: yes
+        recurse: true

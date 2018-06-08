@@ -1,5 +1,8 @@
 FROM alpine:edge
 
+LABEL name=ttrss \
+      version="0.0.0"
+
 RUN apk add --update \
     ansible \
     git \

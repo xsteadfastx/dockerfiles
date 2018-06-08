@@ -1,5 +1,7 @@
 FROM busybox
-MAINTAINER Matt Smith <mtscout6@gmail.com>
+
+LABEL name=jenkins-data \
+      version="0.0.0"
 
 RUN mkdir -p /var/jenkins_home \
   && chown -R default /var/jenkins_home

@@ -1,5 +1,7 @@
 FROM alpine:3.3
-MAINTAINER Marvin Steadfast <marvin@xsteadfastx.org>
+
+LABEL name=taskd \
+      version="0.0.0"
 
 # Install necessary stuff
 RUN apk add --update \

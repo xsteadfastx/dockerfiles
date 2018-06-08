@@ -1,5 +1,8 @@
 FROM alpine:3.6
 
+LABEL name=gospelstream-server \
+      version="0.0.0"
+
 RUN set -ex \
  && apk upgrade -a --no-cache \
  && apk add --no-cache \

@@ -1,5 +1,8 @@
 FROM python:3.4.3-slim
 
+LABEL name=devpi \
+      version="0.0.0"
+
 RUN pip install devpi-server
 
 RUN mkdir /srv/devpi
