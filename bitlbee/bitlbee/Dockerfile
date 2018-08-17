@@ -1,39 +1,42 @@
-FROM ubuntu:bionic
-MAINTAINER Marvin Steadfast <marvin@xsteadfastx.org>
+FROM alpine:edge
 
-ENV TINI_VERSION v0.18.0
+LABEL name="bitlbee"
+LABEL version="0.0.0"
+MAINTAINER Marvin Steadfast <marvin@xsteadfastx.org>
 
 COPY root /
 
 RUN set -ex \
- && apt-get update \
- && apt-get install -y \
-      bitlbee-libpurple \
-      bitlbee-plugin-facebook \
-      bitlbee-plugin-otr \
-      curl \
-      gosu \
-      gpg \
-      purple-matrix \
- && rm -rf /var/lib/apt/lists/* \
- && curl -L https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini -o /tini \
- && curl -L https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc -o /tini.asc \
- && chmod +x /tini \
- && export GNUPGHOME="$(mktemp -d)" \
- && \
-    for server in $(shuf -e ha.pool.sks-keyservers.net \
-        hkp://p80.pool.sks-keyservers.net:80 \
-        keyserver.ubuntu.com \
-        hkp://keyserver.ubuntu.com:80 \
-        pgp.mit.edu) ; do \
-        gpg --keyserver "$server" --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 && break || : ; \
-    done \
- && gpg --verify /tini.asc \
+ && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+ && apk add --no-cache \
+      bitlbee \
+      bitlbee-facebook \
+      bitlbee-otr \
+      su-exec \
+      tini \
+ && apk add --no-cache --virtual build-deps \
+      alpine-sdk \
+      autoconf \
+      automake \
+      bitlbee-dev \
+      git \
+      libtool \
+ && git clone https://alexschroeder.ch/cgit/bitlbee-mastodon /tmp/mastodon \
+ && cd /tmp/mastodon \
+ && ./autogen.sh \
+ && ./configure \
+ && make \
+ && make install \
+ && cd / \
+ && rm -rf /tmp/mastodon \
+ && apk del build-deps \
+ && addgroup -S bitlbee \
+ && adduser -S -H -D -h /var/lib/bitlbee -G bitlbee bitlbee \
  && mkdir -p /var/run/bitlbee
 
 VOLUME /data
 
 EXPOSE 6667
 
-ENTRYPOINT ["/tini", "--", "/entrypoint.sh"]
+ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]
 CMD ["bitlbee"]
