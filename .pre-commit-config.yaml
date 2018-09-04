@@ -16,3 +16,13 @@ repos:
     rev: v1.0.0
     hooks:
       - id: docker-compose-check
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: 0.10.1
+    hooks:
+      - id: detect-secrets
+        exclude: Pipfile*
+  - repo: https://github.com/jorisroovers/gitlint
+    rev: v0.10.0
+    hooks:
+      - id: gitlint
+        stages: [commit-msg]
