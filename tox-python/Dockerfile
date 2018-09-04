@@ -1,5 +1,8 @@
 FROM ubuntu:xenial
 
+LABEL Name="tox-python"
+LABEL Version="0.1.0"
+
 ENV LANG C.UTF-8
 ENV HOME /root
 ENV PYENV_ROOT $HOME/.pyenv
@@ -23,6 +26,7 @@ RUN set -ex \
         tk-dev' \
  && apt-get update \
  && apt-get install -y $buildDeps \
+ && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
 ENV py21=2.1.3 \
@@ -31,14 +35,15 @@ ENV py21=2.1.3 \
     py24=2.4.6 \
     py25=2.5.6 \
     py26=2.6.9 \
-    py27=2.7.14 \
+    py27=2.7.15 \
     py30=3.0.1 \
     py31=3.1.5 \
     py32=3.2.6 \
     py33=3.3.7 \
-    py34=3.4.7 \
-    py35=3.5.4 \
-    py36=3.6.4 \
+    py34=3.4.8 \
+    py35=3.5.5 \
+    py36=3.6.6 \
+    py37=3.7.0 \
     pypy27=pypy2.7-5.9.0 \
     pypy35=pypy3.5-5.9.0
 
@@ -58,9 +63,11 @@ ENV py21=2.1.3 \
  &&  ~/.pyenv/bin/pyenv install $py34 \
  &&  ~/.pyenv/bin/pyenv install $py35 \
  &&  ~/.pyenv/bin/pyenv install $py36 \
+ &&  ~/.pyenv/bin/pyenv install $py37 \
  &&  ~/.pyenv/bin/pyenv install $pypy27 \
  &&  ~/.pyenv/bin/pyenv install $pypy35 \
  &&  ~/.pyenv/bin/pyenv global \
+        $py37 \
         $py36 \
         $py35 \
         $py34 \
@@ -77,5 +84,5 @@ ENV py21=2.1.3 \
         $py21 \
         $pypy27 \
         $pypy35 \
- &&  ~/.pyenv/shims/pip3.6 install tox \
+ &&  ~/.pyenv/shims/pip3.7 install tox \
  && ~/.pyenv/bin/pyenv rehash
