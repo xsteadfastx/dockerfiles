@@ -3,8 +3,11 @@ FROM ubuntu:xenial
 LABEL Name="tox-python"
 LABEL Version="0.1.0"
 
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
 ENV LANG C.UTF-8
-ENV HOME /root
+ENV HOME /home/tox
 ENV PYENV_ROOT $HOME/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
@@ -27,7 +30,10 @@ RUN set -ex \
  && apt-get update \
  && apt-get install -y $buildDeps \
  && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/* \
+ && useradd --user-group --uid $USER_ID --create-home --home-dir /home/tox tox
+
+USER tox
 
 ENV py21=2.1.3 \
     py22=2.2.3 \
