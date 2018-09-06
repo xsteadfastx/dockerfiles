@@ -8,6 +8,7 @@ COPY root /
 
 RUN set -ex \
  && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+ && apk upgrade -a --no-cache \
  && apk add --no-cache \
       bitlbee \
       bitlbee-facebook \
