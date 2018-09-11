@@ -1,7 +1,7 @@
 FROM ubuntu:xenial
 
 LABEL Name="tox-python"
-LABEL Version="0.1.0"
+LABEL Version="0.2.0"
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
@@ -10,6 +10,9 @@ ENV LANG C.UTF-8
 ENV HOME /home/tox
 ENV PYENV_ROOT $HOME/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
+
+ENV TINI_VERSION v0.18.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 
 RUN set -ex \
  && buildDeps='\
@@ -31,7 +34,8 @@ RUN set -ex \
  && apt-get install -y $buildDeps \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
- && useradd --user-group --uid $USER_ID --create-home --home-dir /home/tox tox
+ && useradd --user-group --uid $USER_ID --create-home --home-dir /home/tox tox \
+ && chmod +x /tini
 
 USER tox
 
@@ -92,3 +96,6 @@ ENV py21=2.1.3 \
         $pypy35 \
  &&  ~/.pyenv/shims/pip3.7 install tox \
  && ~/.pyenv/bin/pyenv rehash
+
+ENTRYPOINT ["/tini", "--"]
+CMD ["/bin/bash"]
