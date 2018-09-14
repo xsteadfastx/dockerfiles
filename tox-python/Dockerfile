@@ -3,41 +3,44 @@ FROM ubuntu:xenial
 LABEL Name="tox-python"
 LABEL Version="0.2.0"
 
-ARG USER_ID=1000
-ARG GROUP_ID=1000
+ENV USER_ID 1000
+ENV GROUP_ID 1000
 
 ENV LANG C.UTF-8
-ENV HOME /home/tox
+ENV HOME /opt
 ENV PYENV_ROOT $HOME/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 ENV TINI_VERSION v0.18.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 
+ENV GOSU_VERSION 1.10
+
 RUN set -ex \
  && buildDeps='\
-        git \
-        make \
         build-essential \
-        libssl-dev \
-        zlib1g-dev \
+        ca-certificates \
+        curl \
+        git \
         libbz2-dev \
+        libncurses5-dev \
         libreadline-dev \
         libsqlite3-dev \
-        wget \
-        curl \
+        libssl-dev \
         llvm \
-        libncurses5-dev \
+        make \
+        tk-dev \
+        wget \
         xz-utils \
-        tk-dev' \
+        zlib1g-dev' \
  && apt-get update \
  && apt-get install -y $buildDeps \
+ && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+ && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch" \
+ && chmod +x /usr/local/bin/gosu \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
- && useradd --user-group --uid $USER_ID --create-home --home-dir /home/tox tox \
  && chmod +x /tini
-
-USER tox
 
 ENV py21=2.1.3 \
     py22=2.2.3 \
@@ -97,5 +100,9 @@ ENV py21=2.1.3 \
  &&  ~/.pyenv/shims/pip3.7 install tox \
  && ~/.pyenv/bin/pyenv rehash
 
-ENTRYPOINT ["/tini", "--"]
+USER root
+
+ADD entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/tini", "--", "/entrypoint.sh"]
 CMD ["/bin/bash"]
