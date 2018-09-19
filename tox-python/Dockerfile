@@ -57,8 +57,8 @@ ENV py21=2.1.3 \
     py35=3.5.5 \
     py36=3.6.6 \
     py37=3.7.0 \
-    pypy27=pypy2.7-5.9.0 \
-    pypy35=pypy3.5-5.9.0
+    pypy27=pypy2.7-6.0.0 \
+    pypy35=pypy3.5-6.0.0
 
  RUN set -ex \
  && git clone https://github.com/yyuu/pyenv.git ~/.pyenv \
