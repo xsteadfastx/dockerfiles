@@ -23,4 +23,7 @@ taskd: ## Get taskwarrior services up
 mopidy: ## Get mopidy services up
 	cd /opt/dockerfiles/mopidy && docker-compose up --force-recreate -d
 
+dnsmasq: ## Getting dnsmasq up
+	cd /opt/dockerfiles/dnsmasq && docker-compose up --force-recreate -d
+
 all: nginx irc mopidy
