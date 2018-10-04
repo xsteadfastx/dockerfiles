@@ -1,0 +1,9 @@
+version: '3'
+services:
+  tinyproxy:
+    build:
+      context: .
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./tinyproxy.conf:/etc/tinyproxy/tinyproxy.conf
