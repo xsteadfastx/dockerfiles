@@ -1,20 +1,18 @@
 FROM ubuntu:xenial
 
 LABEL Name="tox-python"
-LABEL Version="0.2.0"
+LABEL Version="0.3.0"
 
-ENV USER_ID 1000
-ENV GROUP_ID 1000
+ARG USER_ID=1000
+ARG GROUP_ID=1000
 
 ENV LANG C.UTF-8
-ENV HOME /opt
+ENV HOME /home/tox
 ENV PYENV_ROOT $HOME/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 ENV TINI_VERSION v0.18.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-
-ENV GOSU_VERSION 1.10
 
 RUN set -ex \
  && buildDeps='\
@@ -35,12 +33,13 @@ RUN set -ex \
         zlib1g-dev' \
  && apt-get update \
  && apt-get install -y $buildDeps \
- && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
- && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch" \
- && chmod +x /usr/local/bin/gosu \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
- && chmod +x /tini
+ && chmod +x /tini \
+ && groupadd --gid "$GROUP_ID" tox \
+ && useradd --gid "$GROUP_ID" --uid "$USER_ID" --create-home --home-dir /home/tox tox
+
+USER tox
 
 ENV py21=2.1.3 \
     py22=2.2.3 \
@@ -100,9 +99,5 @@ ENV py21=2.1.3 \
  &&  ~/.pyenv/shims/pip3.7 install tox \
  && ~/.pyenv/bin/pyenv rehash
 
-USER root
-
-ADD entrypoint.sh /entrypoint.sh
-
-ENTRYPOINT ["/tini", "--", "/entrypoint.sh"]
+ENTRYPOINT ["/tini", "--"]
 CMD ["/bin/bash"]
