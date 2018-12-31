@@ -12,16 +12,21 @@ RUN set -ex \
  && apk add -U --no-cache busybox \
  && apk upgrade -a --no-cache \
  && apk add --no-cache \
+        gcc \
         lua \
         lua-cjson \
+        musl-dev \
         openssh-client \
+        py-pip \
         python \
+        python-dev \
         su-exec \
         weechat \
         weechat-lua \
         weechat-perl \
         weechat-python \
         weechat-ruby \
+ && pip install python-potr \
  && addgroup -g $GROUP_ID weechat \
  && adduser -u $USER_ID -G weechat -D weechat
 
