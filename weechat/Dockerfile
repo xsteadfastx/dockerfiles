@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:edge as base
 
 LABEL name=weechat \
       version="0.0.0"
@@ -10,23 +10,39 @@ ENV TERM screen-256color
 
 RUN set -ex \
  && apk add -U --no-cache busybox \
- && apk upgrade -a --no-cache \
+ && apk upgrade -a --no-cache
+
+FROM base as builder
+
+RUN set -ex \
  && apk add --no-cache \
         gcc \
-        lua \
-        lua-cjson \
         musl-dev \
-        openssh-client \
         py-pip \
-        python \
         python-dev \
+ && mkdir /install \
+ && pip install --install-option="--prefix=/install" \
+        python-potr
+
+FROM base
+
+COPY --from=builder /install /usr/local
+
+ENV PYTHONPATH /usr/local/lib/python2.7/site-packages
+
+RUN set -ex \
+ && apk upgrade -a --no-cache \
+ && apk add --no-cache \
+        lua \
+        lua-cjson\
+        python \
         su-exec \
+        openssh-client \
         weechat \
         weechat-lua \
         weechat-perl \
         weechat-python \
         weechat-ruby \
- && pip install python-potr \
  && addgroup -g $GROUP_ID weechat \
  && adduser -u $USER_ID -G weechat -D weechat
 
