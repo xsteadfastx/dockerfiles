@@ -14,8 +14,8 @@ ENV py21=2.1.3 \
     py35=3.5.6 \
     py36=3.6.8 \
     py37=3.7.2 \
-    pypy27=pypy2.7-6.0.0 \
-    pypy35=pypy3.5-6.0.0
+    pypy27=pypy2.7-7.0.0 \
+    pypy35=pypy3.5-7.0.0
 ENV USER_ID=1000
 ENV GROUP_ID=1000
 ENV LANG C.UTF-8
