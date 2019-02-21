@@ -15,7 +15,8 @@ ENV py21=2.1.3 \
     py36=3.6.8 \
     py37=3.7.2 \
     pypy27=pypy2.7-7.0.0 \
-    pypy35=pypy3.5-7.0.0
+    pypy35=pypy3.5-7.0.0 \
+    pypy36=pypy3.6-7.0.0
 ENV USER_ID=1000
 ENV GROUP_ID=1000
 ENV LANG C.UTF-8
@@ -67,6 +68,7 @@ RUN set -ex \
  &&  ~/.pyenv/bin/pyenv install $py37 \
  &&  ~/.pyenv/bin/pyenv install $pypy27 \
  &&  ~/.pyenv/bin/pyenv install $pypy35 \
+ &&  ~/.pyenv/bin/pyenv install $pypy36 \
  &&  ~/.pyenv/bin/pyenv global \
         $py37 \
         $py36 \
@@ -83,6 +85,7 @@ RUN set -ex \
         $py23 \
         $py22 \
         $py21 \
+        $pypy36 \
         $pypy35 \
         $pypy27 \
  && ~/.pyenv/shims/pip3.7 install tox \
