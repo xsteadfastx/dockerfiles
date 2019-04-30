@@ -42,6 +42,7 @@ RUN set -ex \
  && ~/.pyenv/bin/pyenv global $PY_VERSIONS \
  && ~/.pyenv/bin/pyenv rehash \
  && ~/.pyenv/shims/python3.7 -m pip install tox \
+ && ~/.pyenv/shims/python3.7 -m pip install poetry \
  && ~/.pyenv/bin/pyenv rehash
 
 FROM base
@@ -50,6 +51,7 @@ RUN set -ex \
  && apt-get update \
  && apt-get install -y \
         bash \
+        git \
         expat \
         libffi6 \
         libsqlite3-0 \

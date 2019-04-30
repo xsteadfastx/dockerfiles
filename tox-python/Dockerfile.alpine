@@ -35,6 +35,7 @@ RUN set -ex \
  && ~/.pyenv/bin/pyenv global $PY_VERSIONS \
  && ~/.pyenv/bin/pyenv rehash \
  && ~/.pyenv/shims/python3.7 -m pip install tox \
+ && ~/.pyenv/shims/python3.7 -m pip install poetry \
  && ~/.pyenv/bin/pyenv rehash
 
 FROM base
@@ -42,6 +43,7 @@ COPY --chown=tox:tox --from=builder /home/tox/.pyenv /home/tox/.pyenv
 RUN set -ex \
  && apk add --no-cache \
         bash \
+        git \
         libffi \
         sqlite-libs \
         sudo
