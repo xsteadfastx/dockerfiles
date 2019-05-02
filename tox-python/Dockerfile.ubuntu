@@ -53,7 +53,7 @@ RUN set -ex \
         bash \
         expat \
         git \
-        libbz2 \
+        bzip2 \
         libffi6 \
         libsqlite3-0 \
         libssl1.0.0 \
