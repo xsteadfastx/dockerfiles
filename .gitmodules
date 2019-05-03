@@ -4,3 +4,6 @@
 [submodule "synapse/synapse"]
 	path = synapse/synapse
 	url = https://github.com/xsteadfastx/docker-matrix.git
+[submodule "tox-python"]
+	path = tox-python
+	url = https://github.com/xsteadfastx/tox-python-new.git
