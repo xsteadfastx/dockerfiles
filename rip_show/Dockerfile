@@ -1,7 +1,7 @@
 FROM debian:stretch
 
 ENV LANG C.UTF-8
-ENV VIDEO_TRANSCODING_VERSION 0.17.3
+ENV VIDEO_TRANSCODING_VERSION 0.25.2
 
 RUN set -ex \
  && export DEBIAN_FRONTEND=noninteractive \
