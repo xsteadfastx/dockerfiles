@@ -16,6 +16,11 @@ services:
     networks:
       - nextcloud_backend
       - nginx_backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextcloud.rule=Host(`cloud.xsteadfastx.org`)"
+      - "traefik.http.routers.nextcloud.entrypoints=websecure"
+      - "traefik.http.routers.nextcloud.tls.certresolver=myhttpchallenge"
 
   app:
     image: nextcloud:fpm

@@ -13,6 +13,12 @@ services:
       - 0.0.0.0:4040:4040
     networks:
       - nginx_backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonic.rule=Host(`sonic.xsfx.name`)"
+      - "traefik.http.routers.sonic.entrypoints=websecure"
+      - "traefik.http.routers.sonic.tls.certresolver=myhttpchallenge"
+      #- "traefik.http.services.sonic.LoadBalancer.server.Port=4040"
 networks:
   nginx_backend:
     external: true

@@ -24,4 +24,4 @@ mopidy: ## Get mopidy services up
 dnsmasq: ## Getting dnsmasq up
 	cd /opt/dockerfiles/dnsmasq && docker-compose up --force-recreate -d
 
-all: nginx irc mopidy
+all: irc mopidy
