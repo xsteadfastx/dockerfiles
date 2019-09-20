@@ -3,21 +3,11 @@ version: '3'
 services:
   jellyfin:
     image: jellyfin/jellyfin:latest
-    #network_mode: "host"
+    network_mode: "host"
     volumes:
       - "/srv/www/jellyfin/config:/config"
       - "/srv/www/jellyfin/cache:/cache"
       - "/home/marv/Media/Videos:/media/Videos:ro"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.xsfx.name`)"
-      - "traefik.http.routers.jellyfin.entrypoints=websecure"
-      - "traefik.http.routers.jellyfin.tls.certresolver=myhttpchallenge"
-      #- "traefik.http.services.jellyfin.LoadBalancer.server.Port=8096"
-    ports:
-      - 0.0.0.0:8096:8096
-    networks:
-      - nginx_backend
 networks:
   nginx_backend:
     external: true

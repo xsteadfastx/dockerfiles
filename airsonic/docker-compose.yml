@@ -16,9 +16,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.sonic.rule=Host(`sonic.xsfx.name`)"
-      - "traefik.http.routers.sonic.entrypoints=websecure"
-      - "traefik.http.routers.sonic.tls.certresolver=myhttpchallenge"
-      #- "traefik.http.services.sonic.LoadBalancer.server.Port=4040"
+      - "traefik.http.routers.sonic.entrypoints=web"
+      - "traefik.http.routers.sonic.middlewares=redirect-to-https@file"
+      - "traefik.http.routers.sonic-secured.rule=Host(`sonic.xsfx.name`)"
+      - "traefik.http.routers.sonic-secured.entrypoints=websecure"
+      - "traefik.http.routers.sonic-secured.tls.certresolver=myhttpchallenge"
 networks:
   nginx_backend:
     external: true

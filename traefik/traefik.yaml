@@ -1,0 +1,30 @@
+---
+entryPoints:
+  web:
+    address: ":80"
+  traefik:
+    address: ":8080"
+  websecure:
+    address: ":443"
+
+api:
+  dashboard: true
+  # insecure: true
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+  file:
+    filename: dynamic_conf.yaml
+    watch: true
+
+certificatesResolvers:
+  myhttpchallenge:
+    acme:
+      email: marvin@xsteadfastx.org
+      storage: /letsencrypt/acme.json
+      httpChallenge:
+        entryPoint: web
+
+accessLog: {}

@@ -1,0 +1,41 @@
+---
+http:
+
+  routers:
+
+    api:
+      rule: PathPrefix(`/api`) || PathPrefix(`/dashboard`)
+      service: api@internal
+      middlewares:
+        - auth
+      entryPoints:
+        - traefik
+
+    jellyfin:
+      rule: Host(`jellyfin.xsfx.name`)
+      entryPoints:
+        - websecure
+      service: jellyfin
+      tls:
+        certResolver: myhttpchallenge
+
+  services:
+
+    jellyfin:
+      loadBalancer:
+        servers:
+          - url: http://192.168.39.115:8096
+        passHostHeader: true
+
+  middlewares:
+
+    auth:
+      basicAuth:
+        users:
+          - "admin:$apr1$F1a67RvE$b39HIo10fXwwEBLzNYdTM0"
+
+    redirect-to-https:
+      redirectScheme:
+        scheme: https
+        permanent: true
+
