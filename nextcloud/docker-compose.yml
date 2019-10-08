@@ -18,6 +18,7 @@ services:
       - nginx_backend
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=nginx_backend"
       - "traefik.http.routers.nextcloud.rule=Host(`cloud.xsteadfastx.org`)"
       - "traefik.http.routers.nextcloud.entrypoints=websecure"
       - "traefik.http.routers.nextcloud.tls.certresolver=myhttpchallenge"
