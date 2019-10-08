@@ -1,15 +1,15 @@
-.PHONY: help mopidy nginx irc taskd all
+.PHONY: help mopidy traefik irc taskd all
 
 help: ## Show this help
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-nginx: ## Get nginx services up
+traefik: ## Get traefik services up
 	@docker network inspect nginx_backend >/dev/null 2>&1 || docker network create nginx_backend
-	cd /opt/dockerfiles/emby && docker-compose up --force-recreate -d
+	cd /opt/dockerfiles/jellyfin && docker-compose up --force-recreate -d
 	cd /opt/dockerfiles/gitea && docker-compose up --force-recreate -d
 	cd /opt/dockerfiles/nextcloud && docker-compose up --force-recreate -d
-	cd /opt/dockerfiles/synapse && docker-compose up --force-recreate -d
-	cd /opt/dockerfiles/nginx && docker-compose up --force-recreate -d
+	cd /opt/dockerfiles/airsonic && docker-compose up --force-recreate -d
+	cd /opt/dockerfiles/traefik && docker-compose up --force-recreate -d
 
 irc: ## Get communication services up
 	@docker network inspect communication_backend >/dev/null 2>&1 || docker network create communication_backend
@@ -24,4 +24,4 @@ mopidy: ## Get mopidy services up
 dnsmasq: ## Getting dnsmasq up
 	cd /opt/dockerfiles/dnsmasq && docker-compose up --force-recreate -d
 
-all: irc mopidy
+all: traefik irc
