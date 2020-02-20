@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   traefik:
-    image: "traefik:v2.0.1"
+    image: "traefik:v2.0.4"
     container_name: "traefik"
     ports:
       - "80:80"
@@ -20,6 +20,15 @@ services:
       options:
         max-size: "200K"
         max-file: "10"
+  whoami:
+    image: containous/whoami
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.xsfx.name`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=myhttpchallenge"
+    networks:
+      - nginx_backend
 networks:
   nginx_frontend:
   nginx_backend:
