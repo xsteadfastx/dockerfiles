@@ -9,6 +9,8 @@ services:
       - /home/marv/Media/Videos/Movies:/airsonic/movies:ro
       - playlists:/airsonic/playlists
       - podcasts:/airsonic/podcasts
+    ports:
+      - 0.0.0.0:4040:4040
     networks:
       - nginx_backend
     labels:
