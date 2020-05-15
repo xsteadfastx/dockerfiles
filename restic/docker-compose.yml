@@ -1,0 +1,20 @@
+---
+version: '3'
+services:
+  restic:
+    image: restic/rest-server
+    volumes:
+      - /media/backup/daily/restic:/data
+    networks:
+      - nginx_backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.restic.rule=Host(`bkp.xsfx.dev`)"
+      - "traefik.http.routers.restic.entrypoints=websecure"
+      - "traefik.http.routers.restic.tls.certresolver=myhttpchallenge"
+      - "traefik.http.services.restic.LoadBalancer.server.Port=8000"
+    environment:
+      OPTIONS: --prometheus
+networks:
+  nginx_backend:
+    external: true
