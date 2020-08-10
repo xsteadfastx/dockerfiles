@@ -14,7 +14,7 @@ services:
       - "traefik.http.routers.restic.tls.certresolver=myhttpchallenge"
       - "traefik.http.services.restic.LoadBalancer.server.Port=8000"
     environment:
-      OPTIONS: --prometheus
+      OPTIONS: --prometheus --private-repos
 networks:
   nginx_backend:
     external: true
