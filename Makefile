@@ -8,7 +8,7 @@ traefik: ## Get traefik services up
 	cd /opt/dockerfiles/jellyfin && docker-compose up --force-recreate -d
 	cd /opt/dockerfiles/gitea && docker-compose up --force-recreate -d
 	cd /opt/dockerfiles/nextcloud && docker-compose up --force-recreate -d
-	cd /opt/dockerfiles/airsonic && docker-compose up --force-recreate -d
+	cd /opt/dockerfiles/navidrome && docker-compose up --force-recreate -d
 	cd /opt/dockerfiles/traefik && docker-compose up --force-recreate -d
 
 irc: ## Get communication services up

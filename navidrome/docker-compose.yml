@@ -1,0 +1,24 @@
+---
+version: '3'
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    user: 1000:1000
+    volumes:
+      - data:/data
+      - /home/marv/Media/Musik:/music:ro
+    networks:
+      - nginx_backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonic.rule=Host(`sonic.xsfx.name`)"
+      - "traefik.http.routers.sonic.entrypoints=web"
+      - "traefik.http.routers.sonic.middlewares=redirect-to-https@file"
+      - "traefik.http.routers.sonic-secured.rule=Host(`sonic.xsfx.name`)"
+      - "traefik.http.routers.sonic-secured.entrypoints=websecure"
+      - "traefik.http.routers.sonic-secured.tls.certresolver=myhttpchallenge"
+networks:
+  nginx_backend:
+    external: true
+volumes:
+  data:
