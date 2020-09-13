@@ -3,6 +3,10 @@ version: '3'
 services:
   navidrome:
     image: deluan/navidrome:latest
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
     user: 1000:1000
     volumes:
       - data:/data
